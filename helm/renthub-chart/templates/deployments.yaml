@@ -14,11 +14,11 @@ spec:
     rollingUpdate:
       maxSurge: 1
       maxUnavailable: 0
-  
+
   selector:
     matchLabels:
       app: gateway
-  
+
   template:
     metadata:
       labels:
@@ -34,18 +34,18 @@ spec:
                 - key: app
                   operator: In
                   values:
-                    - gateway
+                  - gateway
               topologyKey: kubernetes.io/hostname
-      
+
       containers:
       - name: gateway
         image: {{ .Values.services.gateway.image }}
         imagePullPolicy: {{ .Values.image.pullPolicy }}
-        
+
         ports:
         - containerPort: {{ .Values.services.gateway.port }}
           name: http
-        
+
         env:
         - name: DB_HOST
           valueFrom:
@@ -102,7 +102,7 @@ spec:
             secretKeyRef:
               name: db-credentials
               key: DB_PASSWORD
-        
+
         resources:
           requests:
             memory: {{ .Values.services.gateway.resources.requests.memory | quote }}
@@ -129,11 +129,11 @@ spec:
     rollingUpdate:
       maxSurge: 1
       maxUnavailable: 0
-  
+
   selector:
     matchLabels:
       app: auth-service
-  
+
   template:
     metadata:
       labels:
@@ -151,16 +151,16 @@ spec:
                   values:
                   - auth-service
               topologyKey: kubernetes.io/hostname
-      
+
       containers:
       - name: auth-service
         image: {{ .Values.services.auth.image }}
         imagePullPolicy: {{ .Values.image.pullPolicy }}
-        
+
         ports:
         - containerPort: {{ .Values.services.auth.port }}
           name: http
-        
+
         env:
         - name: DB_HOST
           valueFrom:
@@ -187,7 +187,7 @@ spec:
             secretKeyRef:
               name: db-credentials
               key: DB_PASSWORD
-        
+
         resources:
           requests:
             memory: {{ .Values.services.auth.resources.requests.memory | quote }}
@@ -214,11 +214,11 @@ spec:
     rollingUpdate:
       maxSurge: 1
       maxUnavailable: 0
-  
+
   selector:
     matchLabels:
       app: user-service
-  
+
   template:
     metadata:
       labels:
@@ -228,11 +228,11 @@ spec:
       - name: user-service
         image: {{ .Values.services.user.image }}
         imagePullPolicy: {{ .Values.image.pullPolicy }}
-        
+
         ports:
         - containerPort: {{ .Values.services.user.port }}
           name: http
-        
+
         env:
         - name: USER_PORT
           valueFrom:
@@ -244,7 +244,7 @@ spec:
             configMapKeyRef:
               name: app-config
               key: NODE_ENV
-        
+
         resources:
           requests:
             memory: {{ .Values.services.user.resources.requests.memory | quote }}
@@ -271,11 +271,11 @@ spec:
     rollingUpdate:
       maxSurge: 1
       maxUnavailable: 0
-  
+
   selector:
     matchLabels:
       app: property-service
-  
+
   template:
     metadata:
       labels:
@@ -285,11 +285,11 @@ spec:
       - name: property-service
         image: {{ .Values.services.property.image }}
         imagePullPolicy: {{ .Values.image.pullPolicy }}
-        
+
         ports:
         - containerPort: {{ .Values.services.property.port }}
           name: http
-        
+
         env:
         - name: PROPERTY_PORT
           valueFrom:
@@ -301,7 +301,7 @@ spec:
             configMapKeyRef:
               name: app-config
               key: NODE_ENV
-        
+
         resources:
           requests:
             memory: {{ .Values.services.property.resources.requests.memory | quote }}
@@ -328,11 +328,11 @@ spec:
     rollingUpdate:
       maxSurge: 1
       maxUnavailable: 0
-  
+
   selector:
     matchLabels:
       app: reservation-service
-  
+
   template:
     metadata:
       labels:
@@ -342,11 +342,11 @@ spec:
       - name: reservation-service
         image: {{ .Values.services.reservation.image }}
         imagePullPolicy: {{ .Values.image.pullPolicy }}
-        
+
         ports:
         - containerPort: {{ .Values.services.reservation.port }}
           name: http
-        
+
         env:
         - name: RESERVATION_PORT
           valueFrom:
@@ -358,7 +358,7 @@ spec:
             configMapKeyRef:
               name: app-config
               key: NODE_ENV
-        
+
         resources:
           requests:
             memory: {{ .Values.services.reservation.resources.requests.memory | quote }}
@@ -385,11 +385,11 @@ spec:
     rollingUpdate:
       maxSurge: 1
       maxUnavailable: 0
-  
+
   selector:
     matchLabels:
       app: mail-service
-  
+
   template:
     metadata:
       labels:
@@ -399,11 +399,11 @@ spec:
       - name: mail-service
         image: {{ .Values.services.mail.image }}
         imagePullPolicy: {{ .Values.image.pullPolicy }}
-        
+
         ports:
         - containerPort: {{ .Values.services.mail.port }}
           name: http
-        
+
         env:
         - name: MAIL_PORT
           valueFrom:
@@ -415,7 +415,7 @@ spec:
             configMapKeyRef:
               name: app-config
               key: NODE_ENV
-        
+
         resources:
           requests:
             memory: {{ .Values.services.mail.resources.requests.memory | quote }}

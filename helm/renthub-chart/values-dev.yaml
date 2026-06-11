@@ -1,11 +1,10 @@
-# Development environment values
-# Auto-updated by workflows
+# Development environment valuess
 
 environment: development
 namespace: renthub-dev
 
 image:
-  pullPolicy: IfNotPresent
+  pullPolicy: Always
 
 global:
   domain: renthub-dev.local
@@ -24,7 +23,7 @@ database:
       limits:
         memory: "256Mi"
         cpu: "200m"
-  
+
   mongodb:
     enabled: true
     replicas: 1
@@ -38,7 +37,7 @@ database:
       limits:
         memory: "256Mi"
         cpu: "200m"
-  
+
   redis:
     enabled: true
     replicas: 1
@@ -55,8 +54,10 @@ database:
 
 services:
   gateway:
+    enabled: true
     replicas: 1
-    image: renthub/gateway:dev
+    port: 3333
+    image: ghcr.io/bryant2305/gateway:latest
     resources:
       requests:
         memory: "128Mi"
@@ -64,10 +65,12 @@ services:
       limits:
         memory: "256Mi"
         cpu: "200m"
-  
+
   auth:
+    enabled: true
     replicas: 1
-    image: renthub/auth-service:dev
+    port: 3010
+    image: ghcr.io/bryant2305/auth:latest
     resources:
       requests:
         memory: "128Mi"
@@ -75,10 +78,12 @@ services:
       limits:
         memory: "256Mi"
         cpu: "200m"
-  
+
   user:
+    enabled: true
     replicas: 1
-    image: renthub/user-service:dev
+    port: 3000
+    image: ghcr.io/bryant2305/user:latest
     resources:
       requests:
         memory: "128Mi"
@@ -86,10 +91,12 @@ services:
       limits:
         memory: "256Mi"
         cpu: "200m"
-  
+
   property:
+    enabled: true
     replicas: 1
-    image: renthub/property-service:dev
+    port: 3003
+    image: ghcr.io/bryant2305/property:latest
     resources:
       requests:
         memory: "128Mi"
@@ -97,10 +104,12 @@ services:
       limits:
         memory: "256Mi"
         cpu: "200m"
-  
+
   reservation:
+    enabled: true
     replicas: 1
-    image: renthub/reservation-service:dev
+    port: 3004
+    image: ghcr.io/bryant2305/reservation:latest
     resources:
       requests:
         memory: "128Mi"
@@ -108,10 +117,12 @@ services:
       limits:
         memory: "256Mi"
         cpu: "200m"
-  
+
   mail:
+    enabled: true
     replicas: 1
-    image: renthub/mail-service:dev
+    port: 3006
+    image: ghcr.io/bryant2305/mail:latest
     resources:
       requests:
         memory: "64Mi"
