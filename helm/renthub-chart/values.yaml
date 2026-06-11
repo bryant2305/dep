@@ -1,77 +1,8 @@
-# Default values for renthub Helm chart
-# This is a YAML-formatted file.
-# Declare variables to be passed into your templates.
-
-environment: development
-namespace: renthub
-
-# Image configuration
-image:
-  pullPolicy: IfNotPresent
-
-# Global settings
-global:
-  domain: renthub.local
-  
-# Database configuration
-database:
-  mysql:
-    enabled: true
-    replicas: 1
-    image: mysql:8.0
-    port: 3306
-    service: mysql-service
-    resources:
-      requests:
-        memory: "256Mi"
-        cpu: "250m"
-      limits:
-        memory: "512Mi"
-        cpu: "500m"
-    storage:
-      size: 5Gi
-      className: local-storage
-    
-  mongodb:
-    enabled: true
-    replicas: 1
-    image: mongo:5.0
-    port: 27017
-    service: mongo-service
-    resources:
-      requests:
-        memory: "256Mi"
-        cpu: "250m"
-      limits:
-        memory: "512Mi"
-        cpu: "500m"
-    storage:
-      size: 5Gi
-      className: local-storage
-  
-  redis:
-    enabled: true
-    replicas: 1
-    image: redis:7-alpine
-    port: 6379
-    service: redis-service
-    resources:
-      requests:
-        memory: "128Mi"
-        cpu: "100m"
-      limits:
-        memory: "256Mi"
-        cpu: "200m"
-    storage:
-      size: 2Gi
-      className: local-storage
-
-# Microservices configuration
 services:
   gateway:
     enabled: true
     replicas: 2
-    image: renthub/gateway:latest
+    image: ghcr.io/bryant2305/gateway:latest
     port: 3333
     resources:
       requests:
@@ -80,11 +11,11 @@ services:
       limits:
         memory: "512Mi"
         cpu: "500m"
-  
+
   auth:
     enabled: true
     replicas: 2
-    image: renthub/auth-service:latest
+    image: ghcr.io/bryant2305/auth:latest
     port: 3010
     resources:
       requests:
@@ -93,11 +24,11 @@ services:
       limits:
         memory: "512Mi"
         cpu: "500m"
-  
+
   user:
     enabled: true
     replicas: 2
-    image: renthub/user-service:latest
+    image: ghcr.io/bryant2305/user:latest
     port: 3000
     resources:
       requests:
@@ -106,11 +37,11 @@ services:
       limits:
         memory: "512Mi"
         cpu: "500m"
-  
+
   property:
     enabled: true
     replicas: 2
-    image: renthub/property-service:latest
+    image: ghcr.io/bryant2305/property:latest
     port: 3003
     resources:
       requests:
@@ -119,11 +50,11 @@ services:
       limits:
         memory: "512Mi"
         cpu: "500m"
-  
+
   reservation:
     enabled: true
     replicas: 2
-    image: renthub/reservation-service:latest
+    image: ghcr.io/bryant2305/reservation:latest
     port: 3004
     resources:
       requests:
@@ -132,11 +63,11 @@ services:
       limits:
         memory: "512Mi"
         cpu: "500m"
-  
+
   mail:
     enabled: true
     replicas: 1
-    image: renthub/mail-service:latest
+    image: ghcr.io/bryant2305/mail:latest
     port: 3006
     resources:
       requests:
@@ -145,22 +76,3 @@ services:
       limits:
         memory: "256Mi"
         cpu: "200m"
-
-# ConfigMap settings
-configMap:
-  NODE_ENV: "production"
-  LOG_LEVEL: "info"
-  LOG_FORMAT: "json"
-
-# Secret settings (referenced but not hardcoded)
-secrets:
-  dbCredentials:
-    name: db-credentials
-  mongodbCredentials:
-    name: mongodb-credentials
-  redisCredentials:
-    name: redis-credentials
-
-# Storage configuration
-storage:
-  storageClass: local-storage
