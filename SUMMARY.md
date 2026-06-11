@@ -1,5 +1,5 @@
 # Repository Restructuring: Helm + ArgoCD ✅
-
+ 
 ## Restructuring Complete
 
 Your RentHub infrastructure has been **migrated from raw Kubernetes manifests to a professional Helm + ArgoCD setup**. This is the industry-standard approach used by DevOps/SRE teams.
