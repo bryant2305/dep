@@ -1,0 +1,38 @@
+---
+# ArgoCD Application for Staging Environment
+# Manually updated
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: renthub-staging
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: default
+  
+  source:
+    repoURL: https://github.com/your-org/renthub-infrastructure
+    targetRevision: main
+    path: helm/renthub-chart
+    helm:
+      releaseName: renthub-staging
+      values: |
+        environment: staging
+        namespace: renthub-staging
+      valueFiles:
+        - values-staging.yaml
+  
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: renthub-staging
+  
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace=true
+    retry:
+      limit: 5
+      backoff:
+        duration: 5s
+        factor: 2
+        maxDuration: 3m

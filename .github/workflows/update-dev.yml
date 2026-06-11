@@ -1,0 +1,104 @@
+name: Update Dev Deployment
+
+# Trigger on push to develop branch with image updates
+on:
+  push:
+    branches: [develop]
+    paths:
+      - 'src/**'
+      - 'docker/**'
+      - '.github/workflows/update-dev.yml'
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      
+      - name: Setup git
+        run: |
+          git config user.email "ci@renthub.com"
+          git config user.name "RentHub CI"
+      
+      - name: Get short commit SHA
+        id: commit
+        run: echo "sha_short=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
+      
+      # Build and push your images (example for gateway)
+      - name: Build images
+        run: |
+          # Example Docker build commands
+          # docker build -t renthub/gateway:dev-${{ steps.commit.outputs.sha_short }} ./services/gateway
+          # docker push renthub/gateway:dev-${{ steps.commit.outputs.sha_short }}
+          echo "Built images with tag: dev-${{ steps.commit.outputs.sha_short }}"
+      
+      - name: Update values-dev.yaml
+        run: |
+          # Update image tags in values-dev.yaml
+          sed -i "s|renthub/gateway:.*|renthub/gateway:dev-${{ steps.commit.outputs.sha_short }}|g" \
+            helm/renthub-chart/values-dev.yaml
+          
+          sed -i "s|renthub/auth-service:.*|renthub/auth-service:dev-${{ steps.commit.outputs.sha_short }}|g" \
+            helm/renthub-chart/values-dev.yaml
+          
+          sed -i "s|renthub/user-service:.*|renthub/user-service:dev-${{ steps.commit.outputs.sha_short }}|g" \
+            helm/renthub-chart/values-dev.yaml
+          
+          sed -i "s|renthub/property-service:.*|renthub/property-service:dev-${{ steps.commit.outputs.sha_short }}|g" \
+            helm/renthub-chart/values-dev.yaml
+          
+          sed -i "s|renthub/reservation-service:.*|renthub/reservation-service:dev-${{ steps.commit.outputs.sha_short }}|g" \
+            helm/renthub-chart/values-dev.yaml
+          
+          sed -i "s|renthub/mail-service:.*|renthub/mail-service:dev-${{ steps.commit.outputs.sha_short }}|g" \
+            helm/renthub-chart/values-dev.yaml
+      
+      - name: Validate Helm chart
+        run: |
+          helm lint helm/renthub-chart/
+      
+      - name: Commit and push changes
+        run: |
+          git add helm/renthub-chart/values-dev.yaml
+          git commit -m "🚀 Update dev image tags - ${{ steps.commit.outputs.sha_short }}"
+          git push origin develop
+      
+      - name: Notify ArgoCD
+        run: |
+          echo "Changes pushed to develop branch"
+          echo "ArgoCD will automatically sync the dev environment"
+
+  helm-dry-run:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      
+      - name: Setup Helm
+        uses: azure/setup-helm@v3
+        with:
+          version: '3.x'
+      
+      - name: Dry-run helm template for dev
+        run: |
+          helm template renthub-dev helm/renthub-chart \
+            -f helm/renthub-chart/values-dev.yaml \
+            --debug > /tmp/dev-manifests.yaml
+          echo "Dev manifests generated successfully"
+      
+      - name: Dry-run helm template for staging
+        run: |
+          helm template renthub-staging helm/renthub-chart \
+            -f helm/renthub-chart/values-staging.yaml \
+            --debug > /tmp/staging-manifests.yaml
+          echo "Staging manifests generated successfully"
+      
+      - name: Dry-run helm template for prod
+        run: |
+          helm template renthub-prod helm/renthub-chart \
+            -f helm/renthub-chart/values-prod.yaml \
+            --debug > /tmp/prod-manifests.yaml
+          echo "Prod manifests generated successfully"

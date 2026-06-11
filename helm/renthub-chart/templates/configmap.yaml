@@ -1,0 +1,108 @@
+---
+# ConfigMaps - non-sensitive configuration data
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: app-config
+  namespace: {{ .Values.namespace }}
+  labels:
+    app: renthub
+data:
+  # Database hosts
+  DB_HOST: "mysql-service.{{ .Values.namespace }}.svc.cluster.local"
+  DB_PORT: "3306"
+  MONGODB_HOST: "mongo-service.{{ .Values.namespace }}.svc.cluster.local"
+  MONGODB_PORT: "27017"
+  REDIS_HOST: "redis-service.{{ .Values.namespace }}.svc.cluster.local"
+  REDIS_PORT: "6379"
+  
+  # Service endpoints (internal communication)
+  AUTH_SERVICE_URL: "http://auth-service.{{ .Values.namespace }}.svc.cluster.local:3010"
+  USER_SERVICE_URL: "http://user-service.{{ .Values.namespace }}.svc.cluster.local:3000"
+  PROPERTY_SERVICE_URL: "http://property-service.{{ .Values.namespace }}.svc.cluster.local:3003"
+  RESERVATION_SERVICE_URL: "http://reservation-service.{{ .Values.namespace }}.svc.cluster.local:3004"
+  MAIL_SERVICE_URL: "http://mail-service.{{ .Values.namespace }}.svc.cluster.local:3006"
+  GATEWAY_SERVICE_URL: "http://gateway-service.{{ .Values.namespace }}.svc.cluster.local:3333"
+  
+  # Application settings
+  NODE_ENV: "{{ .Values.configMap.NODE_ENV }}"
+  LOG_LEVEL: "{{ .Values.configMap.LOG_LEVEL }}"
+  LOG_FORMAT: "{{ .Values.configMap.LOG_FORMAT }}"
+
+---
+# Gateway ConfigMap
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: gateway-config
+  namespace: {{ .Values.namespace }}
+  labels:
+    app: gateway
+data:
+  GATEWAY_PORT: "3333"
+  SERVICE_NAME: "gateway"
+
+---
+# Auth Service ConfigMap
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: auth-service-config
+  namespace: {{ .Values.namespace }}
+  labels:
+    app: auth-service
+data:
+  AUTH_PORT: "3010"
+  SERVICE_NAME: "auth-service"
+
+---
+# User Service ConfigMap
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: user-service-config
+  namespace: {{ .Values.namespace }}
+  labels:
+    app: user-service
+data:
+  USER_PORT: "3000"
+  SERVICE_NAME: "user-service"
+
+---
+# Property Service ConfigMap
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: property-service-config
+  namespace: {{ .Values.namespace }}
+  labels:
+    app: property-service
+data:
+  PROPERTY_PORT: "3003"
+  SERVICE_NAME: "property-service"
+
+---
+# Reservation Service ConfigMap
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: reservation-service-config
+  namespace: {{ .Values.namespace }}
+  labels:
+    app: reservation-service
+data:
+  RESERVATION_PORT: "3004"
+  SERVICE_NAME: "reservation-service"
+
+---
+# Mail Service ConfigMap
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mail-service-config
+  namespace: {{ .Values.namespace }}
+  labels:
+    app: mail-service
+data:
+  MAIL_PORT: "3006"
+  SERVICE_NAME: "mail-service"

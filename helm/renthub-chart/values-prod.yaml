@@ -1,0 +1,126 @@
+# Production environment values
+# Manually updated + approved
+
+environment: production
+namespace: renthub-prod
+
+image:
+  pullPolicy: Always
+
+global:
+  domain: renthub.com
+
+database:
+  mysql:
+    enabled: true
+    replicas: 1
+    image: mysql:8.0
+    storage:
+      size: 50Gi
+    resources:
+      requests:
+        memory: "512Mi"
+        cpu: "500m"
+      limits:
+        memory: "1Gi"
+        cpu: "1000m"
+  
+  mongodb:
+    enabled: true
+    replicas: 1
+    image: mongo:5.0
+    storage:
+      size: 50Gi
+    resources:
+      requests:
+        memory: "512Mi"
+        cpu: "500m"
+      limits:
+        memory: "1Gi"
+        cpu: "1000m"
+  
+  redis:
+    enabled: true
+    replicas: 1
+    image: redis:7-alpine
+    storage:
+      size: 20Gi
+    resources:
+      requests:
+        memory: "256Mi"
+        cpu: "250m"
+      limits:
+        memory: "512Mi"
+        cpu: "500m"
+
+services:
+  gateway:
+    replicas: 3
+    image: renthub/gateway:latest
+    resources:
+      requests:
+        memory: "512Mi"
+        cpu: "500m"
+      limits:
+        memory: "1Gi"
+        cpu: "1000m"
+  
+  auth:
+    replicas: 3
+    image: renthub/auth-service:latest
+    resources:
+      requests:
+        memory: "512Mi"
+        cpu: "500m"
+      limits:
+        memory: "1Gi"
+        cpu: "1000m"
+  
+  user:
+    replicas: 3
+    image: renthub/user-service:latest
+    resources:
+      requests:
+        memory: "512Mi"
+        cpu: "500m"
+      limits:
+        memory: "1Gi"
+        cpu: "1000m"
+  
+  property:
+    replicas: 3
+    image: renthub/property-service:latest
+    resources:
+      requests:
+        memory: "512Mi"
+        cpu: "500m"
+      limits:
+        memory: "1Gi"
+        cpu: "1000m"
+  
+  reservation:
+    replicas: 3
+    image: renthub/reservation-service:latest
+    resources:
+      requests:
+        memory: "512Mi"
+        cpu: "500m"
+      limits:
+        memory: "1Gi"
+        cpu: "1000m"
+  
+  mail:
+    replicas: 2
+    image: renthub/mail-service:latest
+    resources:
+      requests:
+        memory: "256Mi"
+        cpu: "250m"
+      limits:
+        memory: "512Mi"
+        cpu: "500m"
+
+configMap:
+  NODE_ENV: "production"
+  LOG_LEVEL: "warn"
+  LOG_FORMAT: "json"

@@ -1,0 +1,38 @@
+---
+# ArgoCD Application for Production Environment
+# Manually updated + approved (requires manual sync)
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: renthub-prod
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: default
+  
+  source:
+    repoURL: https://github.com/your-org/renthub-infrastructure
+    targetRevision: main
+    path: helm/renthub-chart
+    helm:
+      releaseName: renthub-prod
+      values: |
+        environment: production
+        namespace: renthub-prod
+      valueFiles:
+        - values-prod.yaml
+  
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: renthub-prod
+  
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace=true
+    retry:
+      limit: 5
+      backoff:
+        duration: 5s
+        factor: 2
+        maxDuration: 3m

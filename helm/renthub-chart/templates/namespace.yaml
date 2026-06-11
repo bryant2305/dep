@@ -1,0 +1,9 @@
+---
+# Namespace template
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: {{ .Values.namespace }}
+  labels:
+    environment: {{ .Values.environment }}
+    app: renthub

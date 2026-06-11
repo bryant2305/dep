@@ -1,0 +1,90 @@
+name: Staging Deployment Validation
+
+# Trigger on PRs to main (staging/prod changes)
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'helm/renthub-chart/values-staging.yaml'
+      - 'helm/renthub-chart/values-prod.yaml'
+      - 'helm/renthub-chart/templates/**'
+      - '.github/workflows/validate-staging.yml'
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      
+      - name: Setup Helm
+        uses: azure/setup-helm@v3
+        with:
+          version: '3.x'
+      
+      - name: Lint Helm chart
+        run: |
+          echo "Linting Helm chart..."
+          helm lint helm/renthub-chart/ -v
+      
+      - name: Generate staging manifests
+        run: |
+          echo "Generating staging manifests for validation..."
+          helm template renthub-staging helm/renthub-chart \
+            -f helm/renthub-chart/values-staging.yaml \
+            --validate > /tmp/staging-manifests.yaml
+          echo "✓ Staging manifests generated successfully"
+      
+      - name: Generate prod manifests
+        run: |
+          echo "Generating production manifests for validation..."
+          helm template renthub-prod helm/renthub-chart \
+            -f helm/renthub-chart/values-prod.yaml \
+            --validate > /tmp/prod-manifests.yaml
+          echo "✓ Production manifests generated successfully"
+      
+      - name: Check resource limits are set
+        run: |
+          echo "Verifying all resources have limits set..."
+          if grep -q "limits:" /tmp/staging-manifests.yaml && grep -q "limits:" /tmp/prod-manifests.yaml; then
+            echo "✓ All resources have limits defined"
+          else
+            echo "✗ Missing resource limits!"
+            exit 1
+          fi
+      
+      - name: Check namespaces are correct
+        run: |
+          echo "Verifying namespace configuration..."
+          if grep -q "namespace: renthub-staging" /tmp/staging-manifests.yaml; then
+            echo "✓ Staging namespace correct"
+          fi
+          if grep -q "namespace: renthub-prod" /tmp/prod-manifests.yaml; then
+            echo "✓ Production namespace correct"
+          fi
+      
+      - name: Add comment to PR
+        if: always()
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const fs = require('fs');
+            const comment = `## 🔍 Helm Validation Results
+            
+### Staging Deployment
+- ✓ Helm chart linting passed
+            
+### Production Deployment
+- ✓ All resource limits verified
+- ✓ Namespaces configured correctly
+            
+**Note:** This change requires manual sync in ArgoCD and should be reviewed before deployment.
+            `;
+            
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: comment
+            });

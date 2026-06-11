@@ -1,0 +1,63 @@
+# .gitignore - RentHub Infrastructure
+
+# Helm
+*.tgz
+*.tar.gz
+helm/*/charts/
+helm/*/.helmignore
+
+# Kubernetes
+*.kubeconfig
+kubeconfig*
+.kube/
+
+# ArgoCD
+argocd-auth-token
+.argocd/
+
+# Secrets and sensitive data
+secrets/
+.env
+.env.local
+.env.*.local
+secrets.yaml
+sealed-secrets.yaml
+values-secrets.yaml
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# OS
+Thumbs.db
+.AppleDouble
+.LSOverride
+
+# Backups
+*.backup
+*.bak
+old-manifests-backup/
+
+# Logs
+*.log
+logs/
+
+# Dependencies
+node_modules/
+vendor/
+.venv/
+
+# Build outputs
+dist/
+build/
+target/
+.terraform/
+terraform.tfstate*
+
+# Temporary files
+*.tmp
+*.temp

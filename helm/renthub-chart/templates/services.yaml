@@ -1,0 +1,186 @@
+---
+# Services - expose pods to network traffic
+# MySQL Service (ClusterIP - internal only)
+{{- if .Values.database.mysql.enabled }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysql-service
+  namespace: {{ .Values.namespace }}
+  labels:
+    app: mysql
+spec:
+  selector:
+    app: mysql
+  ports:
+    - port: {{ .Values.database.mysql.port }}
+      targetPort: {{ .Values.database.mysql.port }}
+      protocol: TCP
+  type: ClusterIP
+{{- end }}
+
+---
+# MongoDB Service (ClusterIP - internal only)
+{{- if .Values.database.mongodb.enabled }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: mongo-service
+  namespace: {{ .Values.namespace }}
+  labels:
+    app: mongo
+spec:
+  selector:
+    app: mongo
+  ports:
+    - port: {{ .Values.database.mongodb.port }}
+      targetPort: {{ .Values.database.mongodb.port }}
+      protocol: TCP
+  type: ClusterIP
+{{- end }}
+
+---
+# Redis Service (ClusterIP - internal only)
+{{- if .Values.database.redis.enabled }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: redis-service
+  namespace: {{ .Values.namespace }}
+  labels:
+    app: redis
+spec:
+  selector:
+    app: redis
+  ports:
+    - port: {{ .Values.database.redis.port }}
+      targetPort: {{ .Values.database.redis.port }}
+      protocol: TCP
+  type: ClusterIP
+{{- end }}
+
+---
+# Gateway Service
+{{- if .Values.services.gateway.enabled }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: gateway-service
+  namespace: {{ .Values.namespace }}
+  labels:
+    app: gateway
+spec:
+  selector:
+    app: gateway
+  ports:
+    - port: {{ .Values.services.gateway.port }}
+      targetPort: {{ .Values.services.gateway.port }}
+      protocol: TCP
+      name: http
+  type: ClusterIP
+{{- end }}
+
+---
+# Auth Service
+{{- if .Values.services.auth.enabled }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: auth-service
+  namespace: {{ .Values.namespace }}
+  labels:
+    app: auth-service
+spec:
+  selector:
+    app: auth-service
+  ports:
+    - port: {{ .Values.services.auth.port }}
+      targetPort: {{ .Values.services.auth.port }}
+      protocol: TCP
+      name: http
+  type: ClusterIP
+{{- end }}
+
+---
+# User Service
+{{- if .Values.services.user.enabled }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: user-service
+  namespace: {{ .Values.namespace }}
+  labels:
+    app: user-service
+spec:
+  selector:
+    app: user-service
+  ports:
+    - port: {{ .Values.services.user.port }}
+      targetPort: {{ .Values.services.user.port }}
+      protocol: TCP
+      name: http
+  type: ClusterIP
+{{- end }}
+
+---
+# Property Service
+{{- if .Values.services.property.enabled }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: property-service
+  namespace: {{ .Values.namespace }}
+  labels:
+    app: property-service
+spec:
+  selector:
+    app: property-service
+  ports:
+    - port: {{ .Values.services.property.port }}
+      targetPort: {{ .Values.services.property.port }}
+      protocol: TCP
+      name: http
+  type: ClusterIP
+{{- end }}
+
+---
+# Reservation Service
+{{- if .Values.services.reservation.enabled }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: reservation-service
+  namespace: {{ .Values.namespace }}
+  labels:
+    app: reservation-service
+spec:
+  selector:
+    app: reservation-service
+  ports:
+    - port: {{ .Values.services.reservation.port }}
+      targetPort: {{ .Values.services.reservation.port }}
+      protocol: TCP
+      name: http
+  type: ClusterIP
+{{- end }}
+
+---
+# Mail Service
+{{- if .Values.services.mail.enabled }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: mail-service
+  namespace: {{ .Values.namespace }}
+  labels:
+    app: mail-service
+spec:
+  selector:
+    app: mail-service
+  ports:
+    - port: {{ .Values.services.mail.port }}
+      targetPort: {{ .Values.services.mail.port }}
+      protocol: TCP
+      name: http
+  type: ClusterIP
+{{- end }}

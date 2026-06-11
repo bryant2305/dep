@@ -1,0 +1,126 @@
+# Staging environment values
+# Manually updated
+
+environment: staging
+namespace: renthub-staging
+
+image:
+  pullPolicy: IfNotPresent
+
+global:
+  domain: renthub-staging.local
+
+database:
+  mysql:
+    enabled: true
+    replicas: 1
+    image: mysql:8.0
+    storage:
+      size: 10Gi
+    resources:
+      requests:
+        memory: "256Mi"
+        cpu: "250m"
+      limits:
+        memory: "512Mi"
+        cpu: "500m"
+  
+  mongodb:
+    enabled: true
+    replicas: 1
+    image: mongo:5.0
+    storage:
+      size: 10Gi
+    resources:
+      requests:
+        memory: "256Mi"
+        cpu: "250m"
+      limits:
+        memory: "512Mi"
+        cpu: "500m"
+  
+  redis:
+    enabled: true
+    replicas: 1
+    image: redis:7-alpine
+    storage:
+      size: 5Gi
+    resources:
+      requests:
+        memory: "128Mi"
+        cpu: "100m"
+      limits:
+        memory: "256Mi"
+        cpu: "200m"
+
+services:
+  gateway:
+    replicas: 2
+    image: renthub/gateway:staging
+    resources:
+      requests:
+        memory: "256Mi"
+        cpu: "250m"
+      limits:
+        memory: "512Mi"
+        cpu: "500m"
+  
+  auth:
+    replicas: 2
+    image: renthub/auth-service:staging
+    resources:
+      requests:
+        memory: "256Mi"
+        cpu: "250m"
+      limits:
+        memory: "512Mi"
+        cpu: "500m"
+  
+  user:
+    replicas: 2
+    image: renthub/user-service:staging
+    resources:
+      requests:
+        memory: "256Mi"
+        cpu: "250m"
+      limits:
+        memory: "512Mi"
+        cpu: "500m"
+  
+  property:
+    replicas: 2
+    image: renthub/property-service:staging
+    resources:
+      requests:
+        memory: "256Mi"
+        cpu: "250m"
+      limits:
+        memory: "512Mi"
+        cpu: "500m"
+  
+  reservation:
+    replicas: 2
+    image: renthub/reservation-service:staging
+    resources:
+      requests:
+        memory: "256Mi"
+        cpu: "250m"
+      limits:
+        memory: "512Mi"
+        cpu: "500m"
+  
+  mail:
+    replicas: 1
+    image: renthub/mail-service:staging
+    resources:
+      requests:
+        memory: "128Mi"
+        cpu: "100m"
+      limits:
+        memory: "256Mi"
+        cpu: "200m"
+
+configMap:
+  NODE_ENV: "staging"
+  LOG_LEVEL: "info"
+  LOG_FORMAT: "json"

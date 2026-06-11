@@ -1,0 +1,183 @@
+---
+# MySQL StatefulSet
+{{- if .Values.database.mysql.enabled }}
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: mysql
+  namespace: {{ .Values.namespace }}
+  labels:
+    app: mysql
+spec:
+  serviceName: mysql-service
+  replicas: {{ .Values.database.mysql.replicas }}
+  selector:
+    matchLabels:
+      app: mysql
+  template:
+    metadata:
+      labels:
+        app: mysql
+    spec:
+      containers:
+      - name: mysql
+        image: {{ .Values.database.mysql.image }}
+        ports:
+        - containerPort: {{ .Values.database.mysql.port }}
+          name: mysql
+        
+        env:
+        - name: MYSQL_ROOT_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: db-credentials
+              key: DB_PASSWORD
+        - name: MYSQL_DATABASE
+          valueFrom:
+            secretKeyRef:
+              name: db-credentials
+              key: DB_DATABASE
+        
+        resources:
+          requests:
+            memory: {{ .Values.database.mysql.resources.requests.memory | quote }}
+            cpu: {{ .Values.database.mysql.resources.requests.cpu | quote }}
+          limits:
+            memory: {{ .Values.database.mysql.resources.limits.memory | quote }}
+            cpu: {{ .Values.database.mysql.resources.limits.cpu | quote }}
+        
+        volumeMounts:
+        - name: mysql-storage
+          mountPath: /var/lib/mysql
+  
+  volumeClaimTemplates:
+  - metadata:
+      name: mysql-storage
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      storageClassName: {{ .Values.database.mysql.storage.className }}
+      resources:
+        requests:
+          storage: {{ .Values.database.mysql.storage.size }}
+{{- end }}
+
+---
+# MongoDB StatefulSet
+{{- if .Values.database.mongodb.enabled }}
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: mongo
+  namespace: {{ .Values.namespace }}
+  labels:
+    app: mongo
+spec:
+  serviceName: mongo-service
+  replicas: {{ .Values.database.mongodb.replicas }}
+  selector:
+    matchLabels:
+      app: mongo
+  template:
+    metadata:
+      labels:
+        app: mongo
+    spec:
+      containers:
+      - name: mongo
+        image: {{ .Values.database.mongodb.image }}
+        ports:
+        - containerPort: {{ .Values.database.mongodb.port }}
+          name: mongodb
+        
+        env:
+        - name: MONGO_INITDB_ROOT_USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: mongodb-credentials
+              key: MONGODB_USER
+        - name: MONGO_INITDB_ROOT_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: mongodb-credentials
+              key: MONGODB_PASSWORD
+        
+        resources:
+          requests:
+            memory: {{ .Values.database.mongodb.resources.requests.memory | quote }}
+            cpu: {{ .Values.database.mongodb.resources.requests.cpu | quote }}
+          limits:
+            memory: {{ .Values.database.mongodb.resources.limits.memory | quote }}
+            cpu: {{ .Values.database.mongodb.resources.limits.cpu | quote }}
+        
+        volumeMounts:
+        - name: mongo-storage
+          mountPath: /data/db
+  
+  volumeClaimTemplates:
+  - metadata:
+      name: mongo-storage
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      storageClassName: {{ .Values.database.mongodb.storage.className }}
+      resources:
+        requests:
+          storage: {{ .Values.database.mongodb.storage.size }}
+{{- end }}
+
+---
+# Redis StatefulSet
+{{- if .Values.database.redis.enabled }}
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: redis
+  namespace: {{ .Values.namespace }}
+  labels:
+    app: redis
+spec:
+  serviceName: redis-service
+  replicas: {{ .Values.database.redis.replicas }}
+  selector:
+    matchLabels:
+      app: redis
+  template:
+    metadata:
+      labels:
+        app: redis
+    spec:
+      containers:
+      - name: redis
+        image: {{ .Values.database.redis.image }}
+        ports:
+        - containerPort: {{ .Values.database.redis.port }}
+          name: redis
+        
+        env:
+        - name: REDIS_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: redis-credentials
+              key: REDIS_PASSWORD
+        
+        resources:
+          requests:
+            memory: {{ .Values.database.redis.resources.requests.memory | quote }}
+            cpu: {{ .Values.database.redis.resources.requests.cpu | quote }}
+          limits:
+            memory: {{ .Values.database.redis.resources.limits.memory | quote }}
+            cpu: {{ .Values.database.redis.resources.limits.cpu | quote }}
+        
+        volumeMounts:
+        - name: redis-storage
+          mountPath: /data
+  
+  volumeClaimTemplates:
+  - metadata:
+      name: redis-storage
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      storageClassName: {{ .Values.database.redis.storage.className }}
+      resources:
+        requests:
+          storage: {{ .Values.database.redis.storage.size }}
+{{- end }}

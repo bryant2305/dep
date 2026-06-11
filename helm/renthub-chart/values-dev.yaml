@@ -1,0 +1,126 @@
+# Development environment values
+# Auto-updated by workflows
+
+environment: development
+namespace: renthub-dev
+
+image:
+  pullPolicy: IfNotPresent
+
+global:
+  domain: renthub-dev.local
+
+database:
+  mysql:
+    enabled: true
+    replicas: 1
+    image: mysql:8.0
+    storage:
+      size: 5Gi
+    resources:
+      requests:
+        memory: "128Mi"
+        cpu: "100m"
+      limits:
+        memory: "256Mi"
+        cpu: "200m"
+  
+  mongodb:
+    enabled: true
+    replicas: 1
+    image: mongo:5.0
+    storage:
+      size: 5Gi
+    resources:
+      requests:
+        memory: "128Mi"
+        cpu: "100m"
+      limits:
+        memory: "256Mi"
+        cpu: "200m"
+  
+  redis:
+    enabled: true
+    replicas: 1
+    image: redis:7-alpine
+    storage:
+      size: 2Gi
+    resources:
+      requests:
+        memory: "64Mi"
+        cpu: "50m"
+      limits:
+        memory: "128Mi"
+        cpu: "100m"
+
+services:
+  gateway:
+    replicas: 1
+    image: renthub/gateway:dev
+    resources:
+      requests:
+        memory: "128Mi"
+        cpu: "100m"
+      limits:
+        memory: "256Mi"
+        cpu: "200m"
+  
+  auth:
+    replicas: 1
+    image: renthub/auth-service:dev
+    resources:
+      requests:
+        memory: "128Mi"
+        cpu: "100m"
+      limits:
+        memory: "256Mi"
+        cpu: "200m"
+  
+  user:
+    replicas: 1
+    image: renthub/user-service:dev
+    resources:
+      requests:
+        memory: "128Mi"
+        cpu: "100m"
+      limits:
+        memory: "256Mi"
+        cpu: "200m"
+  
+  property:
+    replicas: 1
+    image: renthub/property-service:dev
+    resources:
+      requests:
+        memory: "128Mi"
+        cpu: "100m"
+      limits:
+        memory: "256Mi"
+        cpu: "200m"
+  
+  reservation:
+    replicas: 1
+    image: renthub/reservation-service:dev
+    resources:
+      requests:
+        memory: "128Mi"
+        cpu: "100m"
+      limits:
+        memory: "256Mi"
+        cpu: "200m"
+  
+  mail:
+    replicas: 1
+    image: renthub/mail-service:dev
+    resources:
+      requests:
+        memory: "64Mi"
+        cpu: "50m"
+      limits:
+        memory: "128Mi"
+        cpu: "100m"
+
+configMap:
+  NODE_ENV: "development"
+  LOG_LEVEL: "debug"
+  LOG_FORMAT: "text"
