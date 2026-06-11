@@ -12,7 +12,7 @@ spec:
   project: default
   
   source:
-    repoURL: https://github.com/your-org/renthub-infrastructure
+    repoURL: https://github.com/bryant2305/dep
     targetRevision: HEAD
     path: helm/renthub-chart
     helm:
