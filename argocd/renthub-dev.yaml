@@ -17,9 +17,6 @@ spec:
     path: helm/renthub-chart
     helm:
       releaseName: renthub-dev
-      values: |
-        environment: development
-        namespace: renthub-dev
       valueFiles:
         - values-dev.yaml
   

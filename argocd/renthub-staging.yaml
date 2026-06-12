@@ -12,14 +12,11 @@ spec:
   project: default
   
   source:
-    repoURL: https://github.com/your-org/renthub-infrastructure
-    targetRevision: main
+    repoURL: https://github.com/bryant2305/dep
+    targetRevision: HEAD
     path: helm/renthub-chart
     helm:
       releaseName: renthub-staging
-      values: |
-        environment: staging
-        namespace: renthub-staging
       valueFiles:
         - values-staging.yaml
   
