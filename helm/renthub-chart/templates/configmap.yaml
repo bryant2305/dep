@@ -64,7 +64,7 @@ metadata:
 data:
   AUTH_PORT: "3010"
   SERVICE_NAME: "auth-service"
-  URL: "auth-service"
+  URL: "0.0.0.0"
 
 ---
 # User Service ConfigMap
