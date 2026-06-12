@@ -1,3 +1,4 @@
+---
 # Gateway Deployment
 {{- if .Values.services.gateway.enabled }}
 apiVersion: apps/v1
@@ -16,11 +17,9 @@ spec:
     rollingUpdate:
       maxSurge: 1
       maxUnavailable: 0
-
   selector:
     matchLabels:
       app: gateway
-
   template:
     metadata:
       labels:
@@ -29,89 +28,85 @@ spec:
       affinity:
         podAntiAffinity:
           preferredDuringSchedulingIgnoredDuringExecution:
-          - weight: 100
-            podAffinityTerm:
-              labelSelector:
-                matchExpressions:
-                - key: app
-                  operator: In
-                  values:
-                  - gateway
-              topologyKey: kubernetes.io/hostname
-
+            - weight: 100
+              podAffinityTerm:
+                labelSelector:
+                  matchExpressions:
+                    - key: app
+                      operator: In
+                      values:
+                        - gateway
+                topologyKey: kubernetes.io/hostname
       containers:
-      - name: gateway
-        image: {{ .Values.services.gateway.image }}
-        imagePullPolicy: {{ .Values.image.pullPolicy }}
-
-        ports:
-        - containerPort: {{ .Values.services.gateway.port }}
-          name: http
-
-        env:
-        - name: DB_HOST
-          valueFrom:
-            configMapKeyRef:
-              name: app-config
-              key: DB_HOST
-        - name: DB_PORT
-          valueFrom:
-            configMapKeyRef:
-              name: app-config
-              key: DB_PORT
-        - name: MONGODB_HOST
-          valueFrom:
-            configMapKeyRef:
-              name: app-config
-              key: MONGODB_HOST
-        - name: MONGODB_PORT
-          valueFrom:
-            configMapKeyRef:
-              name: app-config
-              key: MONGODB_PORT
-        - name: REDIS_HOST
-          valueFrom:
-            configMapKeyRef:
-              name: app-config
-              key: REDIS_HOST
-        - name: REDIS_PORT
-          valueFrom:
-            configMapKeyRef:
-              name: app-config
-              key: REDIS_PORT
-        - name: NODE_ENV
-          valueFrom:
-            configMapKeyRef:
-              name: app-config
-              key: NODE_ENV
-        - name: LOG_LEVEL
-          valueFrom:
-            configMapKeyRef:
-              name: app-config
-              key: LOG_LEVEL
-        - name: LOG_FORMAT
-          valueFrom:
-            configMapKeyRef:
-              name: app-config
-              key: LOG_FORMAT
-        - name: GATEWAY_PORT
-          valueFrom:
-            configMapKeyRef:
-              name: gateway-config
-              key: GATEWAY_PORT
-        - name: DB_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: db-credentials
-              key: DB_PASSWORD
-
-        resources:
-          requests:
-            memory: {{ .Values.services.gateway.resources.requests.memory | quote }}
-            cpu: {{ .Values.services.gateway.resources.requests.cpu | quote }}
-          limits:
-            memory: {{ .Values.services.gateway.resources.limits.memory | quote }}
-            cpu: {{ .Values.services.gateway.resources.limits.cpu | quote }}
+        - name: gateway
+          image: {{ .Values.services.gateway.image }}
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - containerPort: {{ .Values.services.gateway.port }}
+              name: http
+          env:
+            - name: DB_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: app-config
+                  key: DB_HOST
+            - name: DB_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: app-config
+                  key: DB_PORT
+            - name: MONGODB_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: app-config
+                  key: MONGODB_HOST
+            - name: MONGODB_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: app-config
+                  key: MONGODB_PORT
+            - name: REDIS_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: app-config
+                  key: REDIS_HOST
+            - name: REDIS_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: app-config
+                  key: REDIS_PORT
+            - name: NODE_ENV
+              valueFrom:
+                configMapKeyRef:
+                  name: app-config
+                  key: NODE_ENV
+            - name: LOG_LEVEL
+              valueFrom:
+                configMapKeyRef:
+                  name: app-config
+                  key: LOG_LEVEL
+            - name: LOG_FORMAT
+              valueFrom:
+                configMapKeyRef:
+                  name: app-config
+                  key: LOG_FORMAT
+            - name: GATEWAY_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: gateway-config
+                  key: GATEWAY_PORT
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: db-credentials
+                  key: DB_PASSWORD
+          resources:
+            requests:
+              memory: {{ .Values.services.gateway.resources.requests.memory | quote }}
+              cpu: {{ .Values.services.gateway.resources.requests.cpu | quote }}
+            limits:
+              memory: {{ .Values.services.gateway.resources.limits.memory | quote }}
+              cpu: {{ .Values.services.gateway.resources.limits.cpu | quote }}
 {{- end }}
 
 ---
@@ -133,11 +128,9 @@ spec:
     rollingUpdate:
       maxSurge: 1
       maxUnavailable: 0
-
   selector:
     matchLabels:
       app: auth-service
-
   template:
     metadata:
       labels:
@@ -146,59 +139,65 @@ spec:
       affinity:
         podAntiAffinity:
           preferredDuringSchedulingIgnoredDuringExecution:
-          - weight: 100
-            podAffinityTerm:
-              labelSelector:
-                matchExpressions:
-                - key: app
-                  operator: In
-                  values:
-                  - auth-service
-              topologyKey: kubernetes.io/hostname
-
+            - weight: 100
+              podAffinityTerm:
+                labelSelector:
+                  matchExpressions:
+                    - key: app
+                      operator: In
+                      values:
+                        - auth-service
+                topologyKey: kubernetes.io/hostname
       containers:
-      - name: auth-service
-        image: {{ .Values.services.auth.image }}
-        imagePullPolicy: {{ .Values.image.pullPolicy }}
-
-        ports:
-        - containerPort: {{ .Values.services.auth.port }}
-          name: http
-
-        env:
-        - name: DB_HOST
-          valueFrom:
-            configMapKeyRef:
-              name: app-config
-              key: DB_HOST
-        - name: NODE_ENV
-          valueFrom:
-            configMapKeyRef:
-              name: app-config
-              key: NODE_ENV
-        - name: LOG_LEVEL
-          valueFrom:
-            configMapKeyRef:
-              name: app-config
-              key: LOG_LEVEL
-        - name: AUTH_PORT
-          valueFrom:
-            configMapKeyRef:
-              name: auth-service-config
-              key: AUTH_PORT
-        - name: DB_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: db-credentials
-              key: DB_PASSWORD
-
-        resources:
-          requests:
-            memory: {{ .Values.services.auth.resources.requests.memory | quote }}
-            cpu: {{ .Values.services.auth.resources.requests.cpu | quote }}
-          limits:
-            memory: {{ .Values.services.auth.resources.limits.memory | quote }}
-            cpu: {{ .Values.services.auth.resources.limits.cpu | quote }}
+        - name: auth-service
+          image: {{ .Values.services.auth.image }}
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - containerPort: {{ .Values.services.auth.port }}
+              name: http
+          env:
+            - name: APP_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: auth-service-config
+                  key: AUTH_PORT
+            - name: DB_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: app-config
+                  key: DB_HOST
+            - name: NODE_ENV
+              valueFrom:
+                configMapKeyRef:
+                  name: app-config
+                  key: NODE_ENV
+            - name: LOG_LEVEL
+              valueFrom:
+                configMapKeyRef:
+                  name: app-config
+                  key: LOG_LEVEL
+            - name: EMAIL_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: app-config
+                  key: EMAIL_URL
+            - name: USER_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: app-config
+                  key: USER_URL
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: db-credentials
+                  key: DB_PASSWORD
+          resources:
+            requests:
+              memory: {{ .Values.services.auth.resources.requests.memory | quote }}
+              cpu: {{ .Values.services.auth.resources.requests.cpu | quote }}
+            limits:
+              memory: {{ .Values.services.auth.resources.limits.memory | quote }}
+              cpu: {{ .Values.services.auth.resources.limits.cpu | quote }}
 {{- end }}
 
 ---
@@ -220,44 +219,39 @@ spec:
     rollingUpdate:
       maxSurge: 1
       maxUnavailable: 0
-
   selector:
     matchLabels:
       app: user-service
-
   template:
     metadata:
       labels:
         app: user-service
     spec:
       containers:
-      - name: user-service
-        image: {{ .Values.services.user.image }}
-        imagePullPolicy: {{ .Values.image.pullPolicy }}
-
-        ports:
-        - containerPort: {{ .Values.services.user.port }}
-          name: http
-
-        env:
-        - name: USER_PORT
-          valueFrom:
-            configMapKeyRef:
-              name: user-service-config
-              key: USER_PORT
-        - name: NODE_ENV
-          valueFrom:
-            configMapKeyRef:
-              name: app-config
-              key: NODE_ENV
-
-        resources:
-          requests:
-            memory: {{ .Values.services.user.resources.requests.memory | quote }}
-            cpu: {{ .Values.services.user.resources.requests.cpu | quote }}
-          limits:
-            memory: {{ .Values.services.user.resources.limits.memory | quote }}
-            cpu: {{ .Values.services.user.resources.limits.cpu | quote }}
+        - name: user-service
+          image: {{ .Values.services.user.image }}
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - containerPort: {{ .Values.services.user.port }}
+              name: http
+          env:
+            - name: USER_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: user-service-config
+                  key: USER_PORT
+            - name: NODE_ENV
+              valueFrom:
+                configMapKeyRef:
+                  name: app-config
+                  key: NODE_ENV
+          resources:
+            requests:
+              memory: {{ .Values.services.user.resources.requests.memory | quote }}
+              cpu: {{ .Values.services.user.resources.requests.cpu | quote }}
+            limits:
+              memory: {{ .Values.services.user.resources.limits.memory | quote }}
+              cpu: {{ .Values.services.user.resources.limits.cpu | quote }}
 {{- end }}
 
 ---
@@ -279,44 +273,39 @@ spec:
     rollingUpdate:
       maxSurge: 1
       maxUnavailable: 0
-
   selector:
     matchLabels:
       app: property-service
-
   template:
     metadata:
       labels:
         app: property-service
     spec:
       containers:
-      - name: property-service
-        image: {{ .Values.services.property.image }}
-        imagePullPolicy: {{ .Values.image.pullPolicy }}
-
-        ports:
-        - containerPort: {{ .Values.services.property.port }}
-          name: http
-
-        env:
-        - name: PROPERTY_PORT
-          valueFrom:
-            configMapKeyRef:
-              name: property-service-config
-              key: PROPERTY_PORT
-        - name: NODE_ENV
-          valueFrom:
-            configMapKeyRef:
-              name: app-config
-              key: NODE_ENV
-
-        resources:
-          requests:
-            memory: {{ .Values.services.property.resources.requests.memory | quote }}
-            cpu: {{ .Values.services.property.resources.requests.cpu | quote }}
-          limits:
-            memory: {{ .Values.services.property.resources.limits.memory | quote }}
-            cpu: {{ .Values.services.property.resources.limits.cpu | quote }}
+        - name: property-service
+          image: {{ .Values.services.property.image }}
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - containerPort: {{ .Values.services.property.port }}
+              name: http
+          env:
+            - name: PROPERTY_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: property-service-config
+                  key: PROPERTY_PORT
+            - name: NODE_ENV
+              valueFrom:
+                configMapKeyRef:
+                  name: app-config
+                  key: NODE_ENV
+          resources:
+            requests:
+              memory: {{ .Values.services.property.resources.requests.memory | quote }}
+              cpu: {{ .Values.services.property.resources.requests.cpu | quote }}
+            limits:
+              memory: {{ .Values.services.property.resources.limits.memory | quote }}
+              cpu: {{ .Values.services.property.resources.limits.cpu | quote }}
 {{- end }}
 
 ---
@@ -338,44 +327,39 @@ spec:
     rollingUpdate:
       maxSurge: 1
       maxUnavailable: 0
-
   selector:
     matchLabels:
       app: reservation-service
-
   template:
     metadata:
       labels:
         app: reservation-service
     spec:
       containers:
-      - name: reservation-service
-        image: {{ .Values.services.reservation.image }}
-        imagePullPolicy: {{ .Values.image.pullPolicy }}
-
-        ports:
-        - containerPort: {{ .Values.services.reservation.port }}
-          name: http
-
-        env:
-        - name: RESERVATION_PORT
-          valueFrom:
-            configMapKeyRef:
-              name: reservation-service-config
-              key: RESERVATION_PORT
-        - name: NODE_ENV
-          valueFrom:
-            configMapKeyRef:
-              name: app-config
-              key: NODE_ENV
-
-        resources:
-          requests:
-            memory: {{ .Values.services.reservation.resources.requests.memory | quote }}
-            cpu: {{ .Values.services.reservation.resources.requests.cpu | quote }}
-          limits:
-            memory: {{ .Values.services.reservation.resources.limits.memory | quote }}
-            cpu: {{ .Values.services.reservation.resources.limits.cpu | quote }}
+        - name: reservation-service
+          image: {{ .Values.services.reservation.image }}
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - containerPort: {{ .Values.services.reservation.port }}
+              name: http
+          env:
+            - name: RESERVATION_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: reservation-service-config
+                  key: RESERVATION_PORT
+            - name: NODE_ENV
+              valueFrom:
+                configMapKeyRef:
+                  name: app-config
+                  key: NODE_ENV
+          resources:
+            requests:
+              memory: {{ .Values.services.reservation.resources.requests.memory | quote }}
+              cpu: {{ .Values.services.reservation.resources.requests.cpu | quote }}
+            limits:
+              memory: {{ .Values.services.reservation.resources.limits.memory | quote }}
+              cpu: {{ .Values.services.reservation.resources.limits.cpu | quote }}
 {{- end }}
 
 ---
@@ -397,42 +381,37 @@ spec:
     rollingUpdate:
       maxSurge: 1
       maxUnavailable: 0
-
   selector:
     matchLabels:
       app: mail-service
-
   template:
     metadata:
       labels:
         app: mail-service
     spec:
       containers:
-      - name: mail-service
-        image: {{ .Values.services.mail.image }}
-        imagePullPolicy: {{ .Values.image.pullPolicy }}
-
-        ports:
-        - containerPort: {{ .Values.services.mail.port }}
-          name: http
-
-        env:
-        - name: MAIL_PORT
-          valueFrom:
-            configMapKeyRef:
-              name: mail-service-config
-              key: MAIL_PORT
-        - name: NODE_ENV
-          valueFrom:
-            configMapKeyRef:
-              name: app-config
-              key: NODE_ENV
-
-        resources:
-          requests:
-            memory: {{ .Values.services.mail.resources.requests.memory | quote }}
-            cpu: {{ .Values.services.mail.resources.requests.cpu | quote }}
-          limits:
-            memory: {{ .Values.services.mail.resources.limits.memory | quote }}
-            cpu: {{ .Values.services.mail.resources.limits.cpu | quote }}
+        - name: mail-service
+          image: {{ .Values.services.mail.image }}
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - containerPort: {{ .Values.services.mail.port }}
+              name: http
+          env:
+            - name: MAIL_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: mail-service-config
+                  key: MAIL_PORT
+            - name: NODE_ENV
+              valueFrom:
+                configMapKeyRef:
+                  name: app-config
+                  key: NODE_ENV
+          resources:
+            requests:
+              memory: {{ .Values.services.mail.resources.requests.memory | quote }}
+              cpu: {{ .Values.services.mail.resources.requests.cpu | quote }}
+            limits:
+              memory: {{ .Values.services.mail.resources.limits.memory | quote }}
+              cpu: {{ .Values.services.mail.resources.limits.cpu | quote }}
 {{- end }}

@@ -18,13 +18,17 @@ data:
   REDIS_HOST: "redis-service.{{ .Values.namespace }}.svc.cluster.local"
   REDIS_PORT: "6379"
 
-  # Service endpoints (internal communication)
+  # Service endpoints (internal HTTP communication)
   AUTH_SERVICE_URL: "http://auth-service.{{ .Values.namespace }}.svc.cluster.local:3010"
   USER_SERVICE_URL: "http://user-service.{{ .Values.namespace }}.svc.cluster.local:3000"
   PROPERTY_SERVICE_URL: "http://property-service.{{ .Values.namespace }}.svc.cluster.local:3003"
   RESERVATION_SERVICE_URL: "http://reservation-service.{{ .Values.namespace }}.svc.cluster.local:3004"
   MAIL_SERVICE_URL: "http://mail-service.{{ .Values.namespace }}.svc.cluster.local:3006"
   GATEWAY_SERVICE_URL: "http://gateway-service.{{ .Values.namespace }}.svc.cluster.local:3333"
+
+  # gRPC endpoints (host:port, no http://)
+  EMAIL_URL: "mail-service.{{ .Values.namespace }}.svc.cluster.local:3006"
+  USER_URL: "user-service.{{ .Values.namespace }}.svc.cluster.local:3005"
 
   # Application settings
   NODE_ENV: "{{ .Values.configMap.NODE_ENV }}"
@@ -67,7 +71,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: user-service-config
-  namespace: {{ .Values.namespace }}
+  namespace: {{ .Values.namespace }},
   labels:
     app: user-service
   annotations:
