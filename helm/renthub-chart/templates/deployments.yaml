@@ -95,6 +95,11 @@ spec:
                 configMapKeyRef:
                   name: gateway-config
                   key: GATEWAY_PORT
+            - name: URL
+              valueFrom:
+                configMapKeyRef:
+                  name: gateway-config
+                  key: URL
             - name: DB_PASSWORD
               valueFrom:
                 secretKeyRef:
@@ -255,6 +260,11 @@ spec:
                 configMapKeyRef:
                   name: user-service-config
                   key: USER_PORT
+            - name: URL
+              valueFrom:
+                configMapKeyRef:
+                  name: user-service-config
+                  key: URL
             - name: NODE_ENV
               valueFrom:
                 configMapKeyRef:
@@ -334,6 +344,11 @@ spec:
                 configMapKeyRef:
                   name: property-service-config
                   key: PROPERTY_PORT
+            - name: URL
+              valueFrom:
+                configMapKeyRef:
+                  name: property-service-config
+                  key: URL
             - name: NODE_ENV
               valueFrom:
                 configMapKeyRef:
@@ -388,6 +403,11 @@ spec:
                 configMapKeyRef:
                   name: reservation-service-config
                   key: RESERVATION_PORT
+            - name: URL
+              valueFrom:
+                configMapKeyRef:
+                  name: reservation-service-config
+                  key: URL
             - name: NODE_ENV
               valueFrom:
                 configMapKeyRef:

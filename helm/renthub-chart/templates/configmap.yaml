@@ -49,6 +49,7 @@ metadata:
 data:
   GATEWAY_PORT: "3333"
   SERVICE_NAME: "gateway"
+  URL: "0.0.0.0"
 
 ---
 # Auth Service ConfigMap
@@ -80,6 +81,7 @@ metadata:
 data:
   USER_PORT: "3000"
   SERVICE_NAME: "user-service"
+  URL: "0.0.0.0"
 
 ---
 # Property Service ConfigMap
@@ -95,6 +97,7 @@ metadata:
 data:
   PROPERTY_PORT: "3003"
   SERVICE_NAME: "property-service"
+  URL: "0.0.0.0"
 
 ---
 # Reservation Service ConfigMap
@@ -110,6 +113,7 @@ metadata:
 data:
   RESERVATION_PORT: "3004"
   SERVICE_NAME: "reservation-service"
+  URL: "0.0.0.0"
 
 ---
 # Mail Service ConfigMap
