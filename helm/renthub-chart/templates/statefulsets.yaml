@@ -8,6 +8,8 @@ metadata:
   namespace: {{ .Values.namespace }}
   labels:
     app: mysql
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
 spec:
   serviceName: mysql-service
   replicas: {{ .Values.database.mysql.replicas }}
@@ -25,7 +27,7 @@ spec:
         ports:
         - containerPort: {{ .Values.database.mysql.port }}
           name: mysql
-        
+
         env:
         - name: MYSQL_ROOT_PASSWORD
           valueFrom:
@@ -37,7 +39,7 @@ spec:
             secretKeyRef:
               name: db-credentials
               key: DB_DATABASE
-        
+
         resources:
           requests:
             memory: {{ .Values.database.mysql.resources.requests.memory | quote }}
@@ -45,11 +47,11 @@ spec:
           limits:
             memory: {{ .Values.database.mysql.resources.limits.memory | quote }}
             cpu: {{ .Values.database.mysql.resources.limits.cpu | quote }}
-        
+
         volumeMounts:
         - name: mysql-storage
           mountPath: /var/lib/mysql
-  
+
   volumeClaimTemplates:
   - metadata:
       name: mysql-storage
@@ -71,6 +73,8 @@ metadata:
   namespace: {{ .Values.namespace }}
   labels:
     app: mongo
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
 spec:
   serviceName: mongo-service
   replicas: {{ .Values.database.mongodb.replicas }}
@@ -88,7 +92,7 @@ spec:
         ports:
         - containerPort: {{ .Values.database.mongodb.port }}
           name: mongodb
-        
+
         env:
         - name: MONGO_INITDB_ROOT_USERNAME
           valueFrom:
@@ -100,7 +104,7 @@ spec:
             secretKeyRef:
               name: mongodb-credentials
               key: MONGODB_PASSWORD
-        
+
         resources:
           requests:
             memory: {{ .Values.database.mongodb.resources.requests.memory | quote }}
@@ -108,11 +112,11 @@ spec:
           limits:
             memory: {{ .Values.database.mongodb.resources.limits.memory | quote }}
             cpu: {{ .Values.database.mongodb.resources.limits.cpu | quote }}
-        
+
         volumeMounts:
         - name: mongo-storage
           mountPath: /data/db
-  
+
   volumeClaimTemplates:
   - metadata:
       name: mongo-storage
@@ -134,6 +138,8 @@ metadata:
   namespace: {{ .Values.namespace }}
   labels:
     app: redis
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
 spec:
   serviceName: redis-service
   replicas: {{ .Values.database.redis.replicas }}
@@ -151,14 +157,14 @@ spec:
         ports:
         - containerPort: {{ .Values.database.redis.port }}
           name: redis
-        
+
         env:
         - name: REDIS_PASSWORD
           valueFrom:
             secretKeyRef:
               name: redis-credentials
               key: REDIS_PASSWORD
-        
+
         resources:
           requests:
             memory: {{ .Values.database.redis.resources.requests.memory | quote }}
@@ -166,11 +172,11 @@ spec:
           limits:
             memory: {{ .Values.database.redis.resources.limits.memory | quote }}
             cpu: {{ .Values.database.redis.resources.limits.cpu | quote }}
-        
+
         volumeMounts:
         - name: redis-storage
           mountPath: /data
-  
+
   volumeClaimTemplates:
   - metadata:
       name: redis-storage

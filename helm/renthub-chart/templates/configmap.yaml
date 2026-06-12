@@ -7,6 +7,8 @@ metadata:
   namespace: {{ .Values.namespace }}
   labels:
     app: renthub
+  annotations:
+    argocd.argoproj.io/sync-wave: "0"
 data:
   # Database hosts
   DB_HOST: "mysql-service.{{ .Values.namespace }}.svc.cluster.local"
@@ -15,7 +17,7 @@ data:
   MONGODB_PORT: "27017"
   REDIS_HOST: "redis-service.{{ .Values.namespace }}.svc.cluster.local"
   REDIS_PORT: "6379"
-  
+
   # Service endpoints (internal communication)
   AUTH_SERVICE_URL: "http://auth-service.{{ .Values.namespace }}.svc.cluster.local:3010"
   USER_SERVICE_URL: "http://user-service.{{ .Values.namespace }}.svc.cluster.local:3000"
@@ -23,7 +25,7 @@ data:
   RESERVATION_SERVICE_URL: "http://reservation-service.{{ .Values.namespace }}.svc.cluster.local:3004"
   MAIL_SERVICE_URL: "http://mail-service.{{ .Values.namespace }}.svc.cluster.local:3006"
   GATEWAY_SERVICE_URL: "http://gateway-service.{{ .Values.namespace }}.svc.cluster.local:3333"
-  
+
   # Application settings
   NODE_ENV: "{{ .Values.configMap.NODE_ENV }}"
   LOG_LEVEL: "{{ .Values.configMap.LOG_LEVEL }}"
@@ -38,6 +40,8 @@ metadata:
   namespace: {{ .Values.namespace }}
   labels:
     app: gateway
+  annotations:
+    argocd.argoproj.io/sync-wave: "0"
 data:
   GATEWAY_PORT: "3333"
   SERVICE_NAME: "gateway"
@@ -51,6 +55,8 @@ metadata:
   namespace: {{ .Values.namespace }}
   labels:
     app: auth-service
+  annotations:
+    argocd.argoproj.io/sync-wave: "0"
 data:
   AUTH_PORT: "3010"
   SERVICE_NAME: "auth-service"
@@ -64,6 +70,8 @@ metadata:
   namespace: {{ .Values.namespace }}
   labels:
     app: user-service
+  annotations:
+    argocd.argoproj.io/sync-wave: "0"
 data:
   USER_PORT: "3000"
   SERVICE_NAME: "user-service"
@@ -77,6 +85,8 @@ metadata:
   namespace: {{ .Values.namespace }}
   labels:
     app: property-service
+  annotations:
+    argocd.argoproj.io/sync-wave: "0"
 data:
   PROPERTY_PORT: "3003"
   SERVICE_NAME: "property-service"
@@ -90,6 +100,8 @@ metadata:
   namespace: {{ .Values.namespace }}
   labels:
     app: reservation-service
+  annotations:
+    argocd.argoproj.io/sync-wave: "0"
 data:
   RESERVATION_PORT: "3004"
   SERVICE_NAME: "reservation-service"
@@ -103,6 +115,8 @@ metadata:
   namespace: {{ .Values.namespace }}
   labels:
     app: mail-service
+  annotations:
+    argocd.argoproj.io/sync-wave: "0"
 data:
   MAIL_PORT: "3006"
   SERVICE_NAME: "mail-service"

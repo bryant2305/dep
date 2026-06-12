@@ -7,3 +7,5 @@ metadata:
   labels:
     environment: {{ .Values.environment }}
     app: renthub
+  annotations:
+    argocd.argoproj.io/sync-wave: "-2"
