@@ -1,6 +1,4 @@
 ---
-# ArgoCD Application for Development Environment
-# Auto-updated by workflows
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
@@ -10,7 +8,6 @@ metadata:
     - resources-finalizer.argocd.argoproj.io
 spec:
   project: default
-  
   source:
     repoURL: https://github.com/bryant2305/dep
     targetRevision: HEAD
@@ -19,11 +16,9 @@ spec:
       releaseName: renthub-dev
       valueFiles:
         - values-dev.yaml
-  
   destination:
     server: https://kubernetes.default.svc
     namespace: renthub-dev
-  
   syncPolicy:
     automated:
       prune: true
