@@ -9,6 +9,8 @@ metadata:
   namespace: {{ .Values.namespace }}
   labels:
     app: mysql
+  annotations:
+    argocd.argoproj.io/sync-wave: "0"
 spec:
   selector:
     app: mysql
@@ -29,6 +31,8 @@ metadata:
   namespace: {{ .Values.namespace }}
   labels:
     app: mongo
+  annotations:
+    argocd.argoproj.io/sync-wave: "0"
 spec:
   selector:
     app: mongo
@@ -49,6 +53,8 @@ metadata:
   namespace: {{ .Values.namespace }}
   labels:
     app: redis
+  annotations:
+    argocd.argoproj.io/sync-wave: "0"
 spec:
   selector:
     app: redis
@@ -69,6 +75,8 @@ metadata:
   namespace: {{ .Values.namespace }}
   labels:
     app: gateway
+  annotations:
+    argocd.argoproj.io/sync-wave: "0"
 spec:
   selector:
     app: gateway
@@ -90,6 +98,8 @@ metadata:
   namespace: {{ .Values.namespace }}
   labels:
     app: auth-service
+  annotations:
+    argocd.argoproj.io/sync-wave: "0"
 spec:
   selector:
     app: auth-service
@@ -111,6 +121,8 @@ metadata:
   namespace: {{ .Values.namespace }}
   labels:
     app: user-service
+  annotations:
+    argocd.argoproj.io/sync-wave: "0"
 spec:
   selector:
     app: user-service
@@ -132,6 +144,8 @@ metadata:
   namespace: {{ .Values.namespace }}
   labels:
     app: property-service
+  annotations:
+    argocd.argoproj.io/sync-wave: "0"
 spec:
   selector:
     app: property-service
@@ -153,6 +167,8 @@ metadata:
   namespace: {{ .Values.namespace }}
   labels:
     app: reservation-service
+  annotations:
+    argocd.argoproj.io/sync-wave: "0"
 spec:
   selector:
     app: reservation-service
@@ -174,6 +190,8 @@ metadata:
   namespace: {{ .Values.namespace }}
   labels:
     app: mail-service
+  annotations:
+    argocd.argoproj.io/sync-wave: "0"
 spec:
   selector:
     app: mail-service
