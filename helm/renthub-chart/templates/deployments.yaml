@@ -199,7 +199,7 @@ spec:
             - name: JWT_SECRET_KEY
               valueFrom:
                 secretKeyRef:
-                  name: auth-service-secrets
+                  name: app-secrets
                   key: JWT_SECRET_KEY
           resources:
             requests:
