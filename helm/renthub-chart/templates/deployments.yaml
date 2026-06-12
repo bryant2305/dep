@@ -100,6 +100,11 @@ spec:
                 secretKeyRef:
                   name: db-credentials
                   key: DB_PASSWORD
+            - name: JWT_SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: app-secrets
+                  key: JWT_SECRET_KEY
           resources:
             requests:
               memory: {{ .Values.services.gateway.resources.requests.memory | quote }}
