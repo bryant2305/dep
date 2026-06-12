@@ -9,7 +9,7 @@ metadata:
   labels:
     app: gateway
   annotations:
-    argocd.argoproj.io/sync-wave: "1"
+    argocd.argoproj.io/sync-wave: "2"
 spec:
   replicas: {{ .Values.services.gateway.replicas }}
   strategy:
@@ -125,7 +125,7 @@ metadata:
   labels:
     app: auth-service
   annotations:
-    argocd.argoproj.io/sync-wave: "1"
+    argocd.argoproj.io/sync-wave: "2"
 spec:
   replicas: {{ .Values.services.auth.replicas }}
   strategy:
@@ -226,7 +226,7 @@ metadata:
   labels:
     app: user-service
   annotations:
-    argocd.argoproj.io/sync-wave: "1"
+    argocd.argoproj.io/sync-wave: "2"
 spec:
   replicas: {{ .Values.services.user.replicas }}
   strategy:
@@ -305,7 +305,7 @@ metadata:
   labels:
     app: property-service
   annotations:
-    argocd.argoproj.io/sync-wave: "1"
+    argocd.argoproj.io/sync-wave: "2"
 spec:
   replicas: {{ .Values.services.property.replicas }}
   strategy:
@@ -359,7 +359,7 @@ metadata:
   labels:
     app: reservation-service
   annotations:
-    argocd.argoproj.io/sync-wave: "1"
+    argocd.argoproj.io/sync-wave: "2"
 spec:
   replicas: {{ .Values.services.reservation.replicas }}
   strategy:
@@ -438,7 +438,7 @@ metadata:
   labels:
     app: mail-service
   annotations:
-    argocd.argoproj.io/sync-wave: "1"
+    argocd.argoproj.io/sync-wave: "2"
 spec:
   replicas: {{ .Values.services.mail.replicas }}
   strategy:
