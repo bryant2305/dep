@@ -196,7 +196,11 @@ spec:
                 configMapKeyRef:
                   name: auth-service-config
                   key: URL
-                  
+            - name: JWT_SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: auth-service-secrets
+                  key: JWT_SECRET_KEY
           resources:
             requests:
               memory: {{ .Values.services.auth.resources.requests.memory | quote }}
