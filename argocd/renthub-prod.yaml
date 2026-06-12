@@ -27,6 +27,7 @@ spec:
   syncPolicy:
     syncOptions:
       - CreateNamespace=true
+      - PruneLast=true
     retry:
       limit: 5
       backoff:
