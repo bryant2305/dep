@@ -191,6 +191,12 @@ spec:
                 secretKeyRef:
                   name: db-credentials
                   key: DB_PASSWORD
+            - name: URL
+              valueFrom:
+                configMapKeyRef:
+                  name: auth-service-config
+                  key: URL
+                  
           resources:
             requests:
               memory: {{ .Values.services.auth.resources.requests.memory | quote }}
