@@ -123,5 +123,12 @@ metadata:
   annotations:
     argocd.argoproj.io/sync-wave: "0"
 data:
-  MAIL_PORT: "3006"
+  APP_PORT: "3006"
   SERVICE_NAME: "mail-service"
+  URL: "0.0.0.0"
+  MAIL_ENCRYPTION: "tls"
+  MAIL_FROM_ADDRESS: "{{ .Values.mail.fromAddress }}"
+  MAIL_FROM_NAME: "{{ .Values.mail.fromName }}"
+  MAIL_HOST: "{{ .Values.mail.host }}"
+  MAIL_PORT: "587"
+  MAIL_USERNAME: "{{ .Values.mail.username }}"

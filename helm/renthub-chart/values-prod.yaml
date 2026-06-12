@@ -130,3 +130,10 @@ configMap:
   NODE_ENV: "production"
   LOG_LEVEL: "warn"
   LOG_FORMAT: "json"
+
+mail:
+  fromAddress: "bryantperezgarcia005@gmail.com"
+  fromName: "bryantperezgarcia005@gmail.com"
+  host: "smtp.gmail.com"
+  username: "bryantperezgarcia005@gmail.com"
+  password: "tbpy fgok ctnx bpnw"

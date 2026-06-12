@@ -125,3 +125,15 @@ services:
       limits:
         memory: "256Mi"
         cpu: "200m"
+
+configMap:
+  NODE_ENV: "production"
+  LOG_LEVEL: "info"
+  LOG_FORMAT: "json"
+
+mail:
+  fromAddress: "noreply@example.com"
+  fromName: "Example App"
+  host: "smtp.example.com"
+  username: "smtp-user"
+  password: "change-me"

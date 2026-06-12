@@ -141,3 +141,10 @@ configMap:
   NODE_ENV: "development"
   LOG_LEVEL: "debug"
   LOG_FORMAT: "text"
+
+mail:
+  fromAddress: "bryantperezgarcia005@gmail.com"
+  fromName: "bryantperezgarcia005@gmail.com"
+  host: "smtp.gmail.com"
+  username: "bryantperezgarcia005@gmail.com"
+  password: "tbpy fgok ctnx bpnw"
