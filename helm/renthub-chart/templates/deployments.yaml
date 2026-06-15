@@ -110,6 +110,15 @@ spec:
                 secretKeyRef:
                   name: app-secrets
                   key: JWT_SECRET_KEY
+            - name: PROPERTIES_CACHE_KEY
+              value: "properties"
+            - name: RESERVATION_CACHE_KEY
+              value: "reservations"
+            - name: REDIS_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: redis-credentials
+                  key: REDIS_PASSWORD
           resources:
             requests:
               memory: {{ .Values.services.gateway.resources.requests.memory | quote }}
