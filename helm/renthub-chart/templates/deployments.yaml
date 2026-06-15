@@ -90,7 +90,7 @@ spec:
                 configMapKeyRef:
                   name: app-config
                   key: LOG_FORMAT
-            - name: GATEWAY_PORT
+            - name: PORT
               valueFrom:
                 configMapKeyRef:
                   name: gateway-config
@@ -175,7 +175,7 @@ spec:
             - containerPort: {{ .Values.services.auth.port }}
               name: http
           env:
-            - name: APP_PORT
+            - name: PORT
               valueFrom:
                 configMapKeyRef:
                   name: auth-service-config
@@ -264,7 +264,7 @@ spec:
             - containerPort: {{ .Values.services.user.port }}
               name: http
           env:
-            - name: USER_PORT
+            - name: PORT
               valueFrom:
                 configMapKeyRef:
                   name: user-service-config
@@ -348,7 +348,7 @@ spec:
             - containerPort: {{ .Values.services.property.port }}
               name: http
           env:
-            - name: PROPERTY_PORT
+            - name: PORT
               valueFrom:
                 configMapKeyRef:
                   name: property-service-config
@@ -412,7 +412,7 @@ spec:
             - containerPort: {{ .Values.services.reservation.port }}
               name: http
           env:
-            - name: RESERVATION_PORT
+            - name: PORT
               valueFrom:
                 configMapKeyRef:
                   name: reservation-service-config
@@ -496,7 +496,7 @@ spec:
             - containerPort: {{ .Values.services.mail.port }}
               name: http
           env:
-            - name: APP_PORT
+            - name: PORT
               valueFrom:
                 configMapKeyRef:
                   name: mail-service-config
