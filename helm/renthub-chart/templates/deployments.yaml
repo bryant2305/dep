@@ -354,6 +354,11 @@ spec:
                 configMapKeyRef:
                   name: app-config
                   key: NODE_ENV
+            - name: MONGODB_URI
+              valueFrom:
+                secretKeyRef:
+                  name: mongodb-credentials
+                  key: MONGODB_URI
           resources:
             requests:
               memory: {{ .Values.services.property.resources.requests.memory | quote }}
