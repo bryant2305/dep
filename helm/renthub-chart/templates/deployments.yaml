@@ -119,26 +119,28 @@ spec:
                 secretKeyRef:
                   name: redis-credentials
                   key: REDIS_PASSWORD
+            
+            # UPDATED: Matched variable names to local .env
             - name: USER_URL
               valueFrom:
                 configMapKeyRef:
                   name: app-config
                   key: USER_URL
-            - name: AUTH_SERVICE_GRPC_URL
+            - name: AUTH_URL
               valueFrom:
                 configMapKeyRef:
                   name: app-config
-                  key: AUTH_SERVICE_GRPC_URL
-            - name: PROPERTY_SERVICE_GRPC_URL
+                  key: AUTH_URL
+            - name: PROPERTIES_URL
               valueFrom:
                 configMapKeyRef:
                   name: app-config
-                  key: PROPERTY_SERVICE_GRPC_URL
-            - name: RESERVATION_SERVICE_GRPC_URL
+                  key: PROPERTIES_URL
+            - name: RESERVATIONS_URL
               valueFrom:
                 configMapKeyRef:
                   name: app-config
-                  key: RESERVATION_SERVICE_GRPC_URL
+                  key: RESERVATIONS_URL
             - name: EMAIL_URL
               valueFrom:
                 configMapKeyRef:
@@ -198,17 +200,13 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
             - containerPort: {{ .Values.services.auth.port }}
-              name: http
-            - containerPort: 3008
-              name: grpc
+              name: grpc # UPDATED: Changed name to grpc since the app only exposes the gRPC port
           env:
             - name: PORT
               valueFrom:
                 configMapKeyRef:
                   name: auth-service-config
                   key: AUTH_PORT
-            - name: GRPC_PORT
-              value: "3008"
             - name: DB_HOST
               valueFrom:
                 configMapKeyRef:
@@ -406,9 +404,7 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
             - containerPort: {{ .Values.services.property.port }}
-              name: http
-            - containerPort: 3007
-              name: grpc
+              name: grpc # UPDATED: Changed name to grpc since the app only exposes the gRPC port
           env:
             - name: PORT
               valueFrom:
@@ -430,8 +426,6 @@ spec:
                 secretKeyRef:
                   name: mongodb-credentials
                   key: MONGO_URI
-            - name: GRPC_PORT
-              value: "3007"
           resources:
             requests:
               memory: {{ .Values.services.property.resources.requests.memory | quote }}
@@ -486,9 +480,7 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
             - containerPort: {{ .Values.services.reservation.port }}
-              name: http
-            - containerPort: 3009
-              name: grpc
+              name: grpc # UPDATED: Changed name to grpc since the app only exposes the gRPC port
           env:
             - name: PORT
               valueFrom:
@@ -530,8 +522,6 @@ spec:
                 secretKeyRef:
                   name: db-credentials
                   key: DB_PASSWORD
-            - name: GRPC_PORT
-              value: "3009"
           resources:
             requests:
               memory: {{ .Values.services.reservation.resources.requests.memory | quote }}
@@ -586,8 +576,6 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
             - containerPort: {{ .Values.services.mail.port }}
-              name: http
-            - containerPort: 3006
               name: grpc
           env:
             - name: APP_PORT
@@ -650,8 +638,6 @@ spec:
                 configMapKeyRef:
                   name: mail-service-config
                   key: PORT
-            - name: GRPC_PORT
-              value: "3006"
           resources:
             requests:
               memory: {{ .Values.services.mail.resources.requests.memory | quote }}

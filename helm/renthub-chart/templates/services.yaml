@@ -1,3 +1,4 @@
+
 ---
 # Services - expose pods to network traffic
 # MySQL Service (ClusterIP - internal only)
@@ -107,7 +108,7 @@ spec:
     - port: {{ .Values.services.auth.port }}
       targetPort: {{ .Values.services.auth.port }}
       protocol: TCP
-      name: http
+      name: grpc # UPDATED
   type: ClusterIP
 {{- end }}
 
@@ -157,7 +158,7 @@ spec:
     - port: {{ .Values.services.property.port }}
       targetPort: {{ .Values.services.property.port }}
       protocol: TCP
-      name: http
+      name: grpc # UPDATED
   type: ClusterIP
 {{- end }}
 
@@ -180,7 +181,7 @@ spec:
     - port: {{ .Values.services.reservation.port }}
       targetPort: {{ .Values.services.reservation.port }}
       protocol: TCP
-      name: http
+      name: grpc # UPDATED
   type: ClusterIP
 {{- end }}
 
@@ -203,6 +204,6 @@ spec:
     - port: {{ .Values.services.mail.port }}
       targetPort: {{ .Values.services.mail.port }}
       protocol: TCP
-      name: http
+      name: grpc
   type: ClusterIP
 {{- end }}
