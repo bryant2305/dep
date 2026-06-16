@@ -80,6 +80,7 @@ metadata:
     argocd.argoproj.io/sync-wave: "0"
 data:
   USER_PORT: "3000"
+  APP_PORT: "3011"
   SERVICE_NAME: "user-service"
   URL: "0.0.0.0"
 
