@@ -285,8 +285,19 @@ spec:
       labels:
         app: user-service
     spec:
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - weight: 100
+              podAffinityTerm:
+                labelSelector:
+                  matchExpressions:
+                    - key: app
+                      operator: In
+                      values:
+                        - user-service
+                topologyKey: kubernetes.io/hostname
       containers:
-        - name: user-service
           image: {{ .Values.services.user.image }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
@@ -378,6 +389,18 @@ spec:
       labels:
         app: property-service
     spec:
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - weight: 100
+              podAffinityTerm:
+                labelSelector:
+                  matchExpressions:
+                    - key: app
+                      operator: In
+                      values:
+                        - property-service
+                topologyKey: kubernetes.io/hostname
       containers:
         - name: property-service
           image: {{ .Values.services.property.image }}
@@ -446,6 +469,18 @@ spec:
       labels:
         app: reservation-service
     spec:
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - weight: 100
+              podAffinityTerm:
+                labelSelector:
+                  matchExpressions:
+                    - key: app
+                      operator: In
+                      values:
+                        - reservation-service
+                topologyKey: kubernetes.io/hostname
       containers:
         - name: reservation-service
           image: {{ .Values.services.reservation.image }}
@@ -534,6 +569,18 @@ spec:
       labels:
         app: mail-service
     spec:
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - weight: 100
+              podAffinityTerm:
+                labelSelector:
+                  matchExpressions:
+                    - key: app
+                      operator: In
+                      values:
+                        - mail-service
+                topologyKey: kubernetes.io/hostname
       containers:
         - name: mail-service
           image: {{ .Values.services.mail.image }}
