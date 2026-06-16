@@ -131,6 +131,10 @@ spec:
       targetPort: {{ .Values.services.user.port }}
       protocol: TCP
       name: http
+    - port: 3011
+      targetPort: 3011
+      protocol: TCP
+      name: grpc
   type: ClusterIP
 {{- end }}
 
