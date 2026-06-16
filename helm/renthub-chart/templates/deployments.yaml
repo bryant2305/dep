@@ -312,11 +312,6 @@ spec:
                 configMapKeyRef:
                   name: user-service-config
                   key: USER_PORT
-            - name: APP_PORT
-              valueFrom:
-                configMapKeyRef:
-                  name: user-service-config
-                  key: APP_PORT
             - name: GRPC_PORT
               value: "3005"
             - name: URL
