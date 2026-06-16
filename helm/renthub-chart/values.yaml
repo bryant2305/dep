@@ -76,7 +76,7 @@ services:
 
   user:
     enabled: true
-    replicas: 2
+    replicas: 1
     image: ghcr.io/bryant2305/user:latest
     port: 3000
     resources:
