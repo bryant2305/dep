@@ -119,6 +119,31 @@ spec:
                 secretKeyRef:
                   name: redis-credentials
                   key: REDIS_PASSWORD
+            - name: USER_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: app-config
+                  key: USER_URL
+            - name: AUTH_SERVICE_GRPC_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: app-config
+                  key: AUTH_SERVICE_GRPC_URL
+            - name: PROPERTY_SERVICE_GRPC_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: app-config
+                  key: PROPERTY_SERVICE_GRPC_URL
+            - name: RESERVATION_SERVICE_GRPC_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: app-config
+                  key: RESERVATION_SERVICE_GRPC_URL
+            - name: EMAIL_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: app-config
+                  key: EMAIL_URL
           resources:
             requests:
               memory: {{ .Values.services.gateway.resources.requests.memory | quote }}
@@ -181,7 +206,9 @@ spec:
               valueFrom:
                 configMapKeyRef:
                   name: auth-service-config
-                  key: AUTH_PORT
+                  key: AUTH_PORT            - name: GRPC_PORT
+              value: "3008"            - name: GRPC_PORT
+              value: "3008"
             - name: DB_HOST
               valueFrom:
                 configMapKeyRef:
@@ -277,7 +304,9 @@ spec:
               valueFrom:
                 configMapKeyRef:
                   name: user-service-config
-                  key: APP_PORT
+                  key: APP_PORT            - name: GRPC_PORT
+              value: "3005"            - name: GRPC_PORT
+              value: "3005"
             - name: URL
               valueFrom:
                 configMapKeyRef:
@@ -379,6 +408,8 @@ spec:
                 secretKeyRef:
                   name: mongodb-credentials
                   key: MONGO_URI
+            - name: GRPC_PORT
+              value: "3007"
           resources:
             requests:
               memory: {{ .Values.services.property.resources.requests.memory | quote }}
@@ -465,6 +496,8 @@ spec:
                 secretKeyRef:
                   name: db-credentials
                   key: DB_PASSWORD
+            - name: GRPC_PORT
+              value: "3009"
           resources:
             requests:
               memory: {{ .Values.services.reservation.resources.requests.memory | quote }}
@@ -508,7 +541,7 @@ spec:
           ports:
             - containerPort: {{ .Values.services.mail.port }}
               name: http
-            - containerPort: 3008
+            - containerPort: 3006
               name: grpc
           env:
             - name: APP_PORT
@@ -571,6 +604,8 @@ spec:
                 configMapKeyRef:
                   name: mail-service-config
                   key: PORT
+            - name: GRPC_PORT
+              value: "3006"
           resources:
             requests:
               memory: {{ .Values.services.mail.resources.requests.memory | quote }}
