@@ -298,6 +298,7 @@ spec:
                         - user-service
                 topologyKey: kubernetes.io/hostname
       containers:
+        - name: user-service
           image: {{ .Values.services.user.image }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
