@@ -501,7 +501,7 @@ spec:
             - containerPort: {{ .Values.services.mail.port }}
               name: http
           env:
-            - name: PORT
+            - name: APP_PORT
               valueFrom:
                 configMapKeyRef:
                   name: mail-service-config
