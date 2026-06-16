@@ -20,7 +20,7 @@ data:
 
   # Service endpoints (internal HTTP communication)
   AUTH_SERVICE_URL: "http://auth-service.{{ .Values.namespace }}.svc.cluster.local:3010"
-  USER_SERVICE_URL: "http://user-service.{{ .Values.namespace }}.svc.cluster.local:3000"
+  USER_SERVICE_URL: "http://user-service.{{ .Values.namespace }}.svc.cluster.local:3012"
   PROPERTY_SERVICE_URL: "http://property-service.{{ .Values.namespace }}.svc.cluster.local:3003"
   RESERVATION_SERVICE_URL: "http://reservation-service.{{ .Values.namespace }}.svc.cluster.local:3004"
   MAIL_SERVICE_URL: "http://mail-service.{{ .Values.namespace }}.svc.cluster.local:3006"
@@ -82,7 +82,7 @@ metadata:
   annotations:
     argocd.argoproj.io/sync-wave: "0"
 data:
-  USER_PORT: "3000"
+  USER_PORT: "3012"
   APP_PORT: "3011"
   SERVICE_NAME: "user-service"
   URL: "0.0.0.0"

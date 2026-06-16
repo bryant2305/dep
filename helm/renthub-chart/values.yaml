@@ -78,7 +78,7 @@ services:
     enabled: true
     replicas: 1
     image: ghcr.io/bryant2305/user:latest
-    port: 3000
+    port: 3012
     resources:
       requests:
         memory: "256Mi"
