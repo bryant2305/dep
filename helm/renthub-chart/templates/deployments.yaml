@@ -500,7 +500,12 @@ spec:
               valueFrom:
                 configMapKeyRef:
                   name: mail-service-config
-                  key: APP_PORT
+                  key: PORT
+            - name: APP_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: mail-service-config
+                  key: PORT
             - name: SERVICE_NAME
               valueFrom:
                 configMapKeyRef:
