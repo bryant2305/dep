@@ -27,7 +27,7 @@ data:
   GATEWAY_SERVICE_URL: "http://gateway-service.{{ .Values.namespace }}.svc.cluster.local:3333"
 
   # gRPC endpoints (host:port, no http://)
-  EMAIL_URL: "mail-service.{{ .Values.namespace }}.svc.cluster.local:3006"
+  EMAIL_URL: "mail-service.{{ .Values.namespace }}.svc.cluster.local:3008"
   USER_URL: "user-service.{{ .Values.namespace }}.svc.cluster.local:3005"
 
   # Application settings
