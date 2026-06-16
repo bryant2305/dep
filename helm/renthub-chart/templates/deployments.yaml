@@ -304,7 +304,7 @@ spec:
           ports:
             - containerPort: {{ .Values.services.user.port }}
               name: http
-            - containerPort: 3005
+            - containerPort: 3011
               name: grpc
           env:
             - name: PORT
@@ -312,8 +312,11 @@ spec:
                 configMapKeyRef:
                   name: user-service-config
                   key: USER_PORT
-            - name: GRPC_PORT
-              value: "3005"
+            - name: APP_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: user-service-config
+                  key: APP_PORT
             - name: URL
               valueFrom:
                 configMapKeyRef:

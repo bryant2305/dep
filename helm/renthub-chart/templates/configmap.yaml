@@ -28,7 +28,7 @@ data:
 
   # gRPC endpoints (host:port, no http://)
   EMAIL_URL: "mail-service.{{ .Values.namespace }}.svc.cluster.local:3006"
-  USER_URL: "user-service.{{ .Values.namespace }}.svc.cluster.local:3005"
+  USER_URL: "user-service.{{ .Values.namespace }}.svc.cluster.local:3011"
   AUTH_SERVICE_GRPC_URL: "auth-service.{{ .Values.namespace }}.svc.cluster.local:3008"
   PROPERTY_SERVICE_GRPC_URL: "property-service.{{ .Values.namespace }}.svc.cluster.local:3007"
   RESERVATION_SERVICE_GRPC_URL: "reservation-service.{{ .Values.namespace }}.svc.cluster.local:3009"
