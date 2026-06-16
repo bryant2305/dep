@@ -206,8 +206,8 @@ spec:
               valueFrom:
                 configMapKeyRef:
                   name: auth-service-config
-                  key: AUTH_PORT            - name: GRPC_PORT
-              value: "3008"            - name: GRPC_PORT
+                  key: AUTH_PORT
+            - name: GRPC_PORT
               value: "3008"
             - name: DB_HOST
               valueFrom:
@@ -304,8 +304,8 @@ spec:
               valueFrom:
                 configMapKeyRef:
                   name: user-service-config
-                  key: APP_PORT            - name: GRPC_PORT
-              value: "3005"            - name: GRPC_PORT
+                  key: APP_PORT
+            - name: GRPC_PORT
               value: "3005"
             - name: URL
               valueFrom:
