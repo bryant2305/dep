@@ -27,11 +27,12 @@ data:
   GATEWAY_SERVICE_URL: "http://gateway-service.{{ .Values.namespace }}.svc.cluster.local:3333"
 
   # gRPC endpoints (host:port, no http://)
+  # UPDATED: Matched variable names to local .env and ports to main.ts bindings
   EMAIL_URL: "mail-service.{{ .Values.namespace }}.svc.cluster.local:3006"
   USER_URL: "user-service.{{ .Values.namespace }}.svc.cluster.local:3011"
-  AUTH_SERVICE_GRPC_URL: "auth-service.{{ .Values.namespace }}.svc.cluster.local:3008"
-  PROPERTY_SERVICE_GRPC_URL: "property-service.{{ .Values.namespace }}.svc.cluster.local:3007"
-  RESERVATION_SERVICE_GRPC_URL: "reservation-service.{{ .Values.namespace }}.svc.cluster.local:3009"
+  AUTH_URL: "auth-service.{{ .Values.namespace }}.svc.cluster.local:3010"
+  PROPERTIES_URL: "property-service.{{ .Values.namespace }}.svc.cluster.local:3003"
+  RESERVATIONS_URL: "reservation-service.{{ .Values.namespace }}.svc.cluster.local:3004"
 
   # Application settings
   NODE_ENV: "{{ .Values.configMap.NODE_ENV }}"
