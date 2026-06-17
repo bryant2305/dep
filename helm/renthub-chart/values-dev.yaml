@@ -2,13 +2,10 @@
 
 environment: development
 namespace: renthub-dev
-
 image:
   pullPolicy: Always
-
 global:
   domain: renthub-dev.local
-
 database:
   mysql:
     enabled: true
@@ -25,7 +22,6 @@ database:
       limits:
         memory: "512Mi"
         cpu: "500m"
-
   mongodb:
     enabled: true
     replicas: 1
@@ -41,7 +37,6 @@ database:
       limits:
         memory: "512Mi"
         cpu: "500m"
-
   redis:
     enabled: true
     replicas: 1
@@ -57,13 +52,12 @@ database:
       limits:
         memory: "128Mi"
         cpu: "100m"
-
 services:
   gateway:
     enabled: true
     replicas: 1
     port: 3333
-    image: ghcr.io/bryant2305/gateway:latest
+    image: ghcr.io/bryant2305/gateway:356fff9
     resources:
       requests:
         memory: "128Mi"
@@ -71,7 +65,6 @@ services:
       limits:
         memory: "256Mi"
         cpu: "200m"
-
   auth:
     enabled: true
     replicas: 1
@@ -84,7 +77,6 @@ services:
       limits:
         memory: "256Mi"
         cpu: "200m"
-
   user:
     enabled: true
     replicas: 1
@@ -97,7 +89,6 @@ services:
       limits:
         memory: "256Mi"
         cpu: "200m"
-
   property:
     enabled: true
     replicas: 1
@@ -110,7 +101,6 @@ services:
       limits:
         memory: "256Mi"
         cpu: "200m"
-
   reservation:
     enabled: true
     replicas: 1
@@ -123,7 +113,6 @@ services:
       limits:
         memory: "256Mi"
         cpu: "200m"
-
   mail:
     enabled: true
     replicas: 1
@@ -136,12 +125,10 @@ services:
       limits:
         memory: "256Mi"
         cpu: "100m"
-
 configMap:
   NODE_ENV: "development"
   LOG_LEVEL: "debug"
   LOG_FORMAT: "text"
-
 mail:
   fromAddress: "bryantperezgarcia005@gmail.com"
   fromName: "bryantperezgarcia005@gmail.com"
