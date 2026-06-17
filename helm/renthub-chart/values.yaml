@@ -48,7 +48,7 @@ services:
   gateway:
     enabled: true
     replicas: 2
-    image: ghcr.io/bryant2305/gateway:85b36a9
+    image: ghcr.io/bryant2305/gateway:0739659
     port: 3333
     resources:
       requests:
