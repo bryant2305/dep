@@ -119,8 +119,6 @@ spec:
                 secretKeyRef:
                   name: redis-credentials
                   key: REDIS_PASSWORD
-            
-            # UPDATED: Matched variable names to local .env
             - name: USER_URL
               valueFrom:
                 configMapKeyRef:
@@ -200,7 +198,7 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
             - containerPort: {{ .Values.services.auth.port }}
-              name: grpc # UPDATED: Changed name to grpc since the app only exposes the gRPC port
+              name: grpc
           env:
             - name: PORT
               valueFrom:
@@ -350,6 +348,12 @@ spec:
                 secretKeyRef:
                   name: db-credentials
                   key: DB_PASSWORD
+            # UPDATED: Added EMAIL_URL
+            - name: EMAIL_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: app-config
+                  key: EMAIL_URL
           resources:
             requests:
               memory: {{ .Values.services.user.resources.requests.memory | quote }}
@@ -404,7 +408,7 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
             - containerPort: {{ .Values.services.property.port }}
-              name: grpc # UPDATED: Changed name to grpc since the app only exposes the gRPC port
+              name: grpc
           env:
             - name: PORT
               valueFrom:
@@ -426,6 +430,17 @@ spec:
                 secretKeyRef:
                   name: mongodb-credentials
                   key: MONGO_URI
+            # UPDATED: Added USER_URL and RESERVATIONS_URL
+            - name: USER_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: app-config
+                  key: USER_URL
+            - name: RESERVATIONS_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: app-config
+                  key: RESERVATIONS_URL
           resources:
             requests:
               memory: {{ .Values.services.property.resources.requests.memory | quote }}
@@ -480,7 +495,7 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
             - containerPort: {{ .Values.services.reservation.port }}
-              name: grpc # UPDATED: Changed name to grpc since the app only exposes the gRPC port
+              name: grpc
           env:
             - name: PORT
               valueFrom:
@@ -522,6 +537,22 @@ spec:
                 secretKeyRef:
                   name: db-credentials
                   key: DB_PASSWORD
+            # UPDATED: Added PROPERTIES_URL, USER_URL, and EMAIL_URL
+            - name: PROPERTIES_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: app-config
+                  key: PROPERTIES_URL
+            - name: USER_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: app-config
+                  key: USER_URL
+            - name: EMAIL_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: app-config
+                  key: EMAIL_URL
           resources:
             requests:
               memory: {{ .Values.services.reservation.resources.requests.memory | quote }}
