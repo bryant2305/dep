@@ -105,7 +105,7 @@ services:
     enabled: true
     replicas: 1
     port: 3004
-    image: ghcr.io/bryant2305/reservation:latest
+    image: ghcr.io/bryant2305/reservation:e17815b
     resources:
       requests:
         memory: "128Mi"
