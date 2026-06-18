@@ -3,13 +3,10 @@
 
 environment: production
 namespace: renthub-prod
-
 image:
   pullPolicy: Always
-
 global:
   domain: renthub.com
-
 database:
   mysql:
     enabled: true
@@ -26,7 +23,6 @@ database:
       limits:
         memory: "1Gi"
         cpu: "1000m"
-  
   mongodb:
     enabled: true
     replicas: 1
@@ -42,7 +38,6 @@ database:
       limits:
         memory: "1Gi"
         cpu: "1000m"
-  
   redis:
     enabled: true
     replicas: 1
@@ -58,11 +53,10 @@ database:
       limits:
         memory: "512Mi"
         cpu: "500m"
-
 services:
   gateway:
     replicas: 3
-    image: renthub/gateway:latest
+    image: ghcr.io/bryant2305/gateway:1149c34-prod
     resources:
       requests:
         memory: "512Mi"
@@ -70,7 +64,6 @@ services:
       limits:
         memory: "1Gi"
         cpu: "1000m"
-  
   auth:
     replicas: 3
     image: renthub/auth-service:latest
@@ -81,7 +74,6 @@ services:
       limits:
         memory: "1Gi"
         cpu: "1000m"
-  
   user:
     replicas: 3
     image: renthub/user-service:latest
@@ -92,7 +84,6 @@ services:
       limits:
         memory: "1Gi"
         cpu: "1000m"
-  
   property:
     replicas: 3
     image: renthub/property-service:latest
@@ -103,7 +94,6 @@ services:
       limits:
         memory: "1Gi"
         cpu: "1000m"
-  
   reservation:
     replicas: 3
     image: renthub/reservation-service:latest
@@ -114,7 +104,6 @@ services:
       limits:
         memory: "1Gi"
         cpu: "1000m"
-  
   mail:
     replicas: 2
     image: renthub/mail-service:latest
@@ -125,12 +114,10 @@ services:
       limits:
         memory: "512Mi"
         cpu: "500m"
-
 configMap:
   NODE_ENV: "production"
   LOG_LEVEL: "warn"
   LOG_FORMAT: "json"
-
 mail:
   fromAddress: "bryantperezgarcia005@gmail.com"
   fromName: "bryantperezgarcia005@gmail.com"
