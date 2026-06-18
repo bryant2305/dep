@@ -76,7 +76,7 @@ services:
         cpu: "1000m"
   user:
     replicas: 3
-    image: renthub/user-service:latest
+    image: ghcr.io/bryant2305/user:8966ecb-prod
     resources:
       requests:
         memory: "512Mi"
@@ -96,7 +96,7 @@ services:
         cpu: "1000m"
   reservation:
     replicas: 3
-    image: renthub/reservation-service:latest
+    image: ghcr.io/bryant2305/reservation:8966ecb-prod
     resources:
       requests:
         memory: "512Mi"
