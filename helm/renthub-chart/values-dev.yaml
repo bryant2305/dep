@@ -81,7 +81,7 @@ services:
     enabled: true
     replicas: 1
     port: 3000
-    image: ghcr.io/bryant2305/user:latest
+    image: ghcr.io/bryant2305/user:e17815b
     resources:
       requests:
         memory: "128Mi"
