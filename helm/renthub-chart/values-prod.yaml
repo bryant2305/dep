@@ -66,7 +66,7 @@ services:
         cpu: "1000m"
   auth:
     replicas: 3
-    image: renthub/auth-service:latest
+    image: ghcr.io/bryant2305/auth:latest
     resources:
       requests:
         memory: "512Mi"
@@ -86,7 +86,7 @@ services:
         cpu: "1000m"
   property:
     replicas: 3
-    image: renthub/property-service:latest
+    image: ghcr.io/bryant2305/property:latest
     resources:
       requests:
         memory: "512Mi"
@@ -106,7 +106,7 @@ services:
         cpu: "1000m"
   mail:
     replicas: 2
-    image: renthub/mail-service:latest
+    image: ghcr.io/bryant2305/mail:latest
     resources:
       requests:
         memory: "256Mi"
